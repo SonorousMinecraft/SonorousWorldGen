@@ -5,7 +5,9 @@ import com.sereneoasis.level.world.biome.CustomBiomeProvider;
 import com.sereneoasis.level.world.chunk.populator.FeaturePopulator;
 import com.sereneoasis.level.world.chunk.populator.FloraPopulator;
 import com.sereneoasis.level.world.chunk.populator.TreePopulator;
+import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseMaster;
+import com.sereneoasis.level.world.noise.NoiseTypes;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.BiomeProvider;
@@ -76,11 +78,68 @@ public class CustomChunkGenerator extends ChunkGenerator {
                         // Set grass if the block closest to the surface.
                         if(distanceToSurface < 1 && y > SEA_LEVEL) {
 
-                            chunkData.setBlock(x, y, z, layers.get(BiomeLayers.SURFACE).get(random.nextInt(layers.get(BiomeLayers.SURFACE).size())));
+                            if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7) {
+                                if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_PATHS, chunkX * 16 + x, chunkZ * 16 + z) > 0.5){
+                                    chunkData.setBlock(x, y, z, Material.DIRT_PATH);
+                                }
+
+                                else {
+                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BLOCK);
+                                }
+                            } else if (GenerationNoise.getNoise(NoiseTypes.ROADS, chunkX * 16 + x, chunkZ * 16 + z) > 0.8){
+                                chunkData.setBlock(x, y, z, Material.DIAMOND_BLOCK);
+                            }
+                            else {
+                                chunkData.setBlock(x, y, z, layers.get(BiomeLayers.SURFACE).get(random.nextInt(layers.get(BiomeLayers.SURFACE).size())));
+                            }
                         }
                     }
                     else if(y < SEA_LEVEL) {
                         chunkData.setBlock(x, y, z, Material.WATER);
+                    }
+                    //GenerationNoise.getNoise(NoiseTypes.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7
+                    else if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7 && GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) > 0.6 ){
+
+                        // for walls
+                        if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) < 0.7) {
+
+                            if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) < 0.61) {
+                                if ((Y_LIMIT - y > 20 && GenerationNoise.getNoise(NoiseTypes.KINGDOM_BATTLEMENTS, chunkX * 16 + x, chunkZ * 16 + z) > 0)){
+                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
+
+                                }
+                            } else {
+                                if ((Y_LIMIT - y > 30)){
+                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
+                                }
+                            }
+
+                        } else if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) > 0.88) {
+                            if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) > 0.97) {
+                                if ((Y_LIMIT - y > 20 && GenerationNoise.getNoise(NoiseTypes.KINGDOM_BATTLEMENTS, chunkX * 16 + x, chunkZ * 16 + z) > 0)){
+                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
+
+                                }
+                            } else {
+                                if ((Y_LIMIT - y > 30)){
+                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
+                                }
+                            }
+                        }
+                        else {
+
+
+                            if (Y_LIMIT - y > 50) {
+                                chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
+                            }
+                        }
+
+                        if (GenerationNoise.getNoise(NoiseTypes.ROADS,chunkX * 16 + x, chunkZ * 16 + z ) > 0.8) {
+                            if (y-currentY < 20 && y > currentY){
+                                chunkData.setBlock(x, y, z, Material.AIR);
+
+                            }
+                        }
                     }
                 }
             }
