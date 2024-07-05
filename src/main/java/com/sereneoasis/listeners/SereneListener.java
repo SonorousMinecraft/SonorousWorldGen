@@ -1,6 +1,8 @@
 package com.sereneoasis.listeners;
 
 import com.sereneoasis.SereneNPCs;
+import com.sereneoasis.SereneWorldGen;
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseTypes;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
@@ -45,7 +47,7 @@ public class SereneListener implements Listener {
         int x = snapshotX + chunk.getX() * 16;
         int z = snapshotZ + chunk.getZ() * 16;
 
-        if (random.nextDouble() < 0.002){
+        if (random.nextDouble() < 0.002 && !KingdomUtils.isInsideKingdom(x, z)){
 
 
 
@@ -67,18 +69,18 @@ public class SereneListener implements Listener {
         }
 
 
-        if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,  x,  z) > 0.9 && GenerationNoise.getNoise(NoiseTypes.KINGDOM_BORDERS, x,  z) > 0.7) {
+        if (KingdomUtils.isKingdomBuilding(x, z) && KingdomUtils.isInsideKingdom(x, z)) {
 
-            int snapshotXLower = Math.max(0, snapshotX-5);
-            int snapshotXHigher = Math.min(15, snapshotX+5);
-
-
-            int snapshotZLower = Math.max(0, snapshotZ-5);
-            int snapshotZHigher = Math.min(15, snapshotZ+5);
-
-
-            if  ( (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,  snapshotXLower + chunk.getX() * 16 , snapshotZLower + chunk.getZ() * 16) > 0.7) &&
-                    GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,   snapshotXHigher + chunk.getX() * 16 ,  snapshotZHigher  + chunk.getZ() * 16) > 0.7 ) {
+//            int snapshotXLower = Math.max(0, snapshotX-5);
+//            int snapshotXHigher = Math.min(15, snapshotX+5);
+//
+//
+//            int snapshotZLower = Math.max(0, snapshotZ-5);
+//            int snapshotZHigher = Math.min(15, snapshotZ+5);
+//
+//
+//            if  ( (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,  snapshotXLower + chunk.getX() * 16 , snapshotZLower + chunk.getZ() * 16) > 0.7) &&
+//                    GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,   snapshotXHigher + chunk.getX() * 16 ,  snapshotZHigher  + chunk.getZ() * 16) > 0.7 ) {
 
 
                 while (event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {
@@ -91,9 +93,12 @@ public class SereneListener implements Listener {
                 Location loc = new Location(event.getWorld(), x, y, z);
                 loc.setYaw(90 * random.nextInt(0, 4));
                 StructureUtils.spawnStructure(loc, "village/plains/houses" + buildings.get(random.nextInt(buildings.size())));
-                NPCUtils.spawnNPC(loc, Bukkit.getPlayer("Sakrajin"), "Villager", "Notch");
+
+            Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
+                    NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
+                }, 200L);
             }
-        }
+//        }
     }
 
 

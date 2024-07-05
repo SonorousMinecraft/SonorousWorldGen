@@ -80,14 +80,14 @@ public class CustomChunkGenerator extends ChunkGenerator {
 
                             if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7) {
                                 if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_PATHS, chunkX * 16 + x, chunkZ * 16 + z) > 0.5){
-                                    chunkData.setBlock(x, y, z, Material.DIRT_PATH);
+                                    chunkData.setBlock(x, y, z, Material.COBBLESTONE);
                                 }
 
                                 else {
-                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BLOCK);
+                                    chunkData.setBlock(x, y, z, Material.SMOOTH_STONE);
                                 }
                             } else if (GenerationNoise.getNoise(NoiseTypes.ROADS, chunkX * 16 + x, chunkZ * 16 + z) > 0.8){
-                                chunkData.setBlock(x, y, z, Material.DIAMOND_BLOCK);
+                                chunkData.setBlock(x, y, z, Material.COARSE_DIRT);
                             }
                             else {
                                 chunkData.setBlock(x, y, z, layers.get(BiomeLayers.SURFACE).get(random.nextInt(layers.get(BiomeLayers.SURFACE).size())));
@@ -104,14 +104,14 @@ public class CustomChunkGenerator extends ChunkGenerator {
                         if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) < 0.7) {
 
                                 if ((Y_LIMIT - y > 30)){
-                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
+                                    chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
                                 }
                         }
                         else {
 
 
                             if (Y_LIMIT - y > 50) {
-                                chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
+                                chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
                             }
                         }
 

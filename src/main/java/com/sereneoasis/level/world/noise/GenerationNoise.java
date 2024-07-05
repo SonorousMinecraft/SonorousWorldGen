@@ -3,6 +3,7 @@ package com.sereneoasis.level.world.noise;
 import com.sereneoasis.libs.FastNoiseLite;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /***
  * A Class used as a Wrapper with FastNoiseLite
@@ -12,7 +13,7 @@ public class GenerationNoise {
     /***
      * A HashMap with NoiseTypes as keys and noise functions as values
      */
-    private static final HashMap<NoiseTypes, FastNoiseLite> NOISE_TYPE_FUNCTION_MAP = new HashMap<>();
+    private static final ConcurrentHashMap<NoiseTypes, FastNoiseLite> NOISE_TYPE_FUNCTION_MAP = new ConcurrentHashMap<>();
 
     /***
      * Retrieves the noise value for a given Location
