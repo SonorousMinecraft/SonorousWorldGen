@@ -138,36 +138,7 @@ public class GenerationNoise {
         NOISE_TYPE_FUNCTION_MAP.put(types, noise);
     }
 
-    public GenerationNoise() {
-        noise = new FastNoiseLite();
-//        noise.SetNoiseType(FastNoiseLite.NoiseType.Value);
-//        noise.SetFrequency(0.2f);
-//        noise.SetFractalType(FastNoiseLite.FractalType.Ridged);
-//        noise.SetFractalOctaves(2);
-//        noise.SetFractalLacunarity(0f);
-//        noise.SetFractalGain(5f);
-//        noise.SetFractalWeightedStrength(10f);
 
-//        noise.SetNoiseType(FastNoiseLite.NoiseType.ValueCubic);
-//        noise.SetFrequency(0.2f);
-//        noise.SetFractalType(FastNoiseLite.FractalType.PingPong);
-//        noise.SetFractalOctaves(3);
-//        noise.SetFractalLacunarity(0f);
-//        noise.SetFractalGain(1f);
-//        noise.SetFractalWeightedStrength(5f);
-//        noise.SetFractalPingPongStrength(3f);
-//        NOISE_TYPE_FUNCTION_MAP.put(NoiseTypes.KINGDOM_BATTLEMENTS, noise);
-
-        noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
-        noise.SetFrequency(0.5f);
-        noise.SetFractalType(FastNoiseLite.FractalType.None);
-        noise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.Manhattan);
-        noise.SetCellularReturnType(FastNoiseLite.CellularReturnType.CellValue);
-        noise.SetCellularJitter(0f);
-        NOISE_TYPE_FUNCTION_MAP.put(NoiseTypes.KINGDOM_BATTLEMENTS, noise);
-
-
-    }
 
 
 }

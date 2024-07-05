@@ -34,8 +34,6 @@ public class NoiseMaster {
 
             new GenerationNoise(0.002f, 2,1.0f, 20f, 40f, 1.3f, NoiseTypes.KINGDOM_BUILDINGS,FastNoiseLite.CellularDistanceFunction.Manhattan, FastNoiseLite.CellularReturnType.Distance2Div);
             new GenerationNoise(0.002f, 2,-0.1f, 20f, 40f, 1.3f, NoiseTypes.KINGDOM_PATHS, FastNoiseLite.CellularDistanceFunction.Manhattan,  FastNoiseLite.CellularReturnType.Distance2Div);
-//            new GenerationNoise(0.1f, 3, NoiseTypes.KINGDOM_BATTLEMENTS);
-        new GenerationNoise();
         new GenerationNoise(0.02f, 3, NoiseTypes.ROADS, 0.5f, 10f, 1.0f, 1.0f);
 
     }

@@ -103,28 +103,9 @@ public class CustomChunkGenerator extends ChunkGenerator {
                         // for walls
                         if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) < 0.7) {
 
-                            if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) < 0.61) {
-                                if ((Y_LIMIT - y > 20 && GenerationNoise.getNoise(NoiseTypes.KINGDOM_BATTLEMENTS, chunkX * 16 + x, chunkZ * 16 + z) > 0)){
-                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
-
-                                }
-                            } else {
                                 if ((Y_LIMIT - y > 30)){
                                     chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
                                 }
-                            }
-
-                        } else if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) > 0.88) {
-                            if (GenerationNoise.getNoise(NoiseTypes.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) > 0.97) {
-                                if ((Y_LIMIT - y > 20 && GenerationNoise.getNoise(NoiseTypes.KINGDOM_BATTLEMENTS, chunkX * 16 + x, chunkZ * 16 + z) > 0)){
-                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
-
-                                }
-                            } else {
-                                if ((Y_LIMIT - y > 30)){
-                                    chunkData.setBlock(x, y, z, Material.QUARTZ_BRICKS);
-                                }
-                            }
                         }
                         else {
 

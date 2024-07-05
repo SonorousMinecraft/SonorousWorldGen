@@ -1,9 +1,12 @@
 package com.sereneoasis.listeners;
 
+import com.sereneoasis.SereneNPCs;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseTypes;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
+import com.sereneoasis.utils.NPCUtils;
 import com.sereneoasis.utils.StructureUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -74,8 +77,8 @@ public class SereneListener implements Listener {
             int snapshotZHigher = Math.min(15, snapshotZ+5);
 
 
-//            if  ( (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,  snapshotXLower + chunk.getX() * 16 , snapshotZLower + chunk.getZ() * 16) > 0.7) &&
-//                    GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,   snapshotXHigher + chunk.getX() * 16 ,  snapshotZHigher  + chunk.getZ() * 16) > 0.7 ) {
+            if  ( (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,  snapshotXLower + chunk.getX() * 16 , snapshotZLower + chunk.getZ() * 16) > 0.7) &&
+                    GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,   snapshotXHigher + chunk.getX() * 16 ,  snapshotZHigher  + chunk.getZ() * 16) > 0.7 ) {
 
 
                 while (event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {
@@ -88,7 +91,8 @@ public class SereneListener implements Listener {
                 Location loc = new Location(event.getWorld(), x, y, z);
                 loc.setYaw(90 * random.nextInt(0, 4));
                 StructureUtils.spawnStructure(loc, "village/plains/houses" + buildings.get(random.nextInt(buildings.size())));
-//            }
+                NPCUtils.spawnNPC(loc, Bukkit.getPlayer("Sakrajin"), "Villager", "Notch");
+            }
         }
     }
 
