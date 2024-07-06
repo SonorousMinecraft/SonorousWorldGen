@@ -77,7 +77,6 @@
 /home/sujan/IdeaProjects/SereneWorldGen/src/main/java/com/sereneoasis/level/world/biome/biomes/aridland/savanna/WindsweptSavanna.java
 /home/sujan/IdeaProjects/SereneWorldGen/src/main/java/com/sereneoasis/level/world/biome/biomes/woodland/taiga/SnowyTaiga.java
 /home/sujan/IdeaProjects/SereneWorldGen/src/main/java/com/sereneoasis/level/world/biome/biomefeatures/TreeBiome.java
-/home/sujan/IdeaProjects/SereneWorldGen/src/main/java/com/sereneoasis/utils/Vec3Utils.java
 /home/sujan/IdeaProjects/SereneWorldGen/src/main/java/com/sereneoasis/level/world/chunk/populator/TreePopulator.java
 /home/sujan/IdeaProjects/SereneWorldGen/src/main/java/com/sereneoasis/level/world/biome/biomes/highland/peaks/JaggedPeaks.java
 /home/sujan/IdeaProjects/SereneWorldGen/src/main/java/com/sereneoasis/level/world/chunk/populator/FloraPopulator.java

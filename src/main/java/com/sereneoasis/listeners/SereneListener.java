@@ -12,6 +12,7 @@ import com.sereneoasis.utils.NPCUtils;
 import com.sereneoasis.utils.PacketUtils;
 import com.sereneoasis.utils.StructureUtils;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
+import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -20,16 +21,17 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public class SereneListener implements Listener {
 
-    private static final HashMap<UUID, Biome> biomeTracker = new HashMap<>();
 
     private static final Random random = new Random();
 
@@ -41,6 +43,9 @@ public class SereneListener implements Listener {
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event){
 
+        if (!event.isNewChunk()) {
+            return;
+        }
         Chunk chunk = event.getChunk();
 
         int snapshotX = random.nextInt(16);
@@ -51,8 +56,6 @@ public class SereneListener implements Listener {
         int z = snapshotZ + chunk.getZ() * 16;
 
         if (random.nextDouble() < 0.002 && !KingdomUtils.isInsideKingdom(x, z)){
-
-
 
             while(event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {
                 y--;
@@ -87,46 +90,71 @@ public class SereneListener implements Listener {
 //                    GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,   snapshotXHigher + chunk.getX() * 16 ,  snapshotZHigher  + chunk.getZ() * 16) > 0.7 ) {
 
 
-                while (event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {
+            while (event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {
                     y--;
                     if (y == 0) {
                         return;
                     }
-                }
-                y+=1;
+            }
+            y+=1;
             int finalY = y;
-            Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
 
-                        Location loc = new Location(event.getWorld(), x, finalY, z);
-                loc.setYaw(90 * random.nextInt(0, 4));
+            Location loc = new Location(event.getWorld(), x, finalY, z);
+            loc.setYaw(90 * random.nextInt(0, 4));
                 StructureUtils.spawnStructure(loc, "village/plains/houses" + buildings.get(random.nextInt(buildings.size())));
                 NPCMaster npc = NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
-                npcs.add(npc);
-            }, 200L);
+                npcs.put(chunk, npc);
         }
 //        }
     }
 
-    private static final Set<NPCMaster> npcs = new HashSet<>();
+    private static final ConcurrentHashMap<Chunk, NPCMaster > npcs = new ConcurrentHashMap<>();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
-         npcs.forEach((serverPlayer) -> {
-            NPCUtils.addNPC(event.getPlayer(), serverPlayer);
-        });
     }
 
-                            @EventHandler
-    public void onPlayerMove(PlayerMoveEvent playerMoveEvent){
+    private static final ConcurrentHashMap<UUID, Biome> biomeTracker = new ConcurrentHashMap<>();
+
+    private static final ConcurrentHashMap<UUID, Chunk> chunkTracker = new ConcurrentHashMap<>();
+
+
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent playerMoveEvent) {
         Player player = playerMoveEvent.getPlayer();
-        World world = player.getWorld();
-        Biome newBiome = world.getBiome(playerMoveEvent.getTo());
-        Biome previousBiome = biomeTracker.get(player.getUniqueId());
-        if (previousBiome != newBiome){
-            player.sendTitle(newBiome.getKey().getKey().toString(), "Welcome!", 10, 40, 20 );
-            biomeTracker.put(player.getUniqueId(), newBiome);
+
+        if (player.getName().equals("Sakrajin")) {
+            World world = player.getWorld();
+            Biome newBiome = world.getBiome(playerMoveEvent.getTo());
+            Biome previousBiome = biomeTracker.get(player.getUniqueId());
+
+            if (previousBiome != newBiome) {
+                player.sendTitle(newBiome.getKey().getKey().toString(), "Welcome!", 10, 40, 20);
+                biomeTracker.put(player.getUniqueId(), newBiome);
+            }
+            Chunk previousChunk = chunkTracker.get(player.getUniqueId());
+
+            Chunk newChunk = playerMoveEvent.getTo().getChunk();
+            if (previousChunk == null ||  previousChunk.getX() != newChunk.getX() || previousChunk.getZ() != newChunk.getZ() ) {
+//                Bukkit.broadcastMessage("new chunk");
+                chunkTracker.put(player.getUniqueId(), newChunk);
+                NPCMaster serverPlayer = npcs.get(newChunk);
+                if (serverPlayer != null) {
+//                    Bukkit.broadcastMessage("robot on");
+                    NPCUtils.addNPC(player, serverPlayer);
+                    NPCUtils.toggleOn(serverPlayer);
+                }
+//                npcs.forEach((chunk, npcMaster) -> {
+//                    if (chunk.getX() != chunk.getX() || chunk.getZ() != chunk.getZ()) {
+//                        NPCUtils.toggleOff(npcMaster);
+//                    }
+//                });
+            }
+
         }
     }
+
 
 
 }
