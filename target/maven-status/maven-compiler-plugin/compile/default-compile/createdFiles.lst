@@ -126,10 +126,10 @@ com/sereneoasis/level/world/biome/biomes/highland/SnowySlopes$1.class
 com/sereneoasis/level/world/biome/biomefeatures/FloraBiome.class
 com/sereneoasis/level/world/biome/biomes/woodland/forest/FlowerForest.class
 com/sereneoasis/level/world/biome/biomes/aridland/badlands/Badlands.class
+com/sereneoasis/level/world/KingdomUtils.class
 com/sereneoasis/level/world/biome/biomes/aridland/savanna/SavannaPlateau.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/FrozenOcean.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/warm/WarmOcean.class
-com/sereneoasis/utils/Vec3Utils.class
 com/sereneoasis/level/world/biome/biomes/highland/peaks/JaggedPeaks$1.class
 com/sereneoasis/libs/FastNoiseLite.class
 com/sereneoasis/level/world/biome/biomes/flatland/plains/SunflowerPlains$1.class

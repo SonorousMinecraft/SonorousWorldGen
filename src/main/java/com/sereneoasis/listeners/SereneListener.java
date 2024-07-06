@@ -6,8 +6,12 @@ import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseTypes;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
+import com.sereneoasis.npc.random.types.NPCMaster;
+import com.sereneoasis.utils.ClientboundPlayerInfoUpdatePacketWrapper;
 import com.sereneoasis.utils.NPCUtils;
+import com.sereneoasis.utils.PacketUtils;
 import com.sereneoasis.utils.StructureUtils;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -16,13 +20,12 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class SereneListener implements Listener {
 
@@ -69,6 +72,7 @@ public class SereneListener implements Listener {
         }
 
 
+
         if (KingdomUtils.isKingdomBuilding(x, z) && KingdomUtils.isInsideKingdom(x, z)) {
 
 //            int snapshotXLower = Math.max(0, snapshotX-5);
@@ -90,17 +94,27 @@ public class SereneListener implements Listener {
                     }
                 }
                 y+=1;
-                Location loc = new Location(event.getWorld(), x, y, z);
+            int finalY = y;
+            Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
+
+                        Location loc = new Location(event.getWorld(), x, finalY, z);
                 loc.setYaw(90 * random.nextInt(0, 4));
                 StructureUtils.spawnStructure(loc, "village/plains/houses" + buildings.get(random.nextInt(buildings.size())));
-
-            Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
-                    NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
-                }, 200L);
-            }
+                NPCMaster npc = NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
+                npcs.add(npc);
+            }, 200L);
+        }
 //        }
     }
 
+    private static final Set<NPCMaster> npcs = new HashSet<>();
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event){
+         npcs.forEach((serverPlayer) -> {
+            NPCUtils.addNPC(event.getPlayer(), serverPlayer);
+        });
+    }
 
                             @EventHandler
     public void onPlayerMove(PlayerMoveEvent playerMoveEvent){

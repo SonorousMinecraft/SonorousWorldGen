@@ -39,7 +39,7 @@ public class SereneWorldGen extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new SereneListener(), this);
         this.getCommand("SereneWorldGen").setExecutor(new SerenityCommand());
 
-        NPCUtils.initSkins(0, this);
+        NPCUtils.initUUID(0, this);
     }
 
 
