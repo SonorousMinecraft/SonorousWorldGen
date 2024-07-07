@@ -6,6 +6,7 @@ import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import com.sereneoasis.level.world.chunk.CustomChunkGenerator;
 import com.sereneoasis.level.world.noise.NoiseMaster;
 import com.sereneoasis.listeners.SereneListener;
+import com.sereneoasis.utils.NPCUtils;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,6 +39,7 @@ public class SereneWorldGen extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new SereneListener(), this);
         this.getCommand("SereneWorldGen").setExecutor(new SerenityCommand());
 
+        NPCUtils.initUUID(0, this);
     }
 
 

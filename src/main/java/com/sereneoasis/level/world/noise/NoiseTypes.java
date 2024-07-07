@@ -19,5 +19,13 @@ public enum NoiseTypes {
 
     WETLAND,
 
-    CUSTOM_TREES
+    CUSTOM_TREES,
+
+    KINGDOM_WALLS,
+    KINGDOM_BORDERS,
+
+    KINGDOM_BUILDINGS,
+    KINGDOM_PATHS,
+
+    ROADS;
 }

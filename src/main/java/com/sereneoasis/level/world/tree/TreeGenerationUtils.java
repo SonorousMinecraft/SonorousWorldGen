@@ -4,6 +4,7 @@ import com.sereneoasis.libs.FastNoiseLite;
 import com.sereneoasis.utils.BlockUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Leaves;
 import org.bukkit.util.Vector;
 import oshi.util.tuples.Pair;
@@ -88,7 +89,7 @@ public class TreeGenerationUtils {
                     block.setType(Material.OAK_LEAVES);
                     Leaves blockData = (Leaves) block.getBlockData();
                     blockData.setPersistent(true);
-                    block.setBlockData(blockData);
+                    block.setBlockData(blockData, false);
                 });
             }});
 
@@ -140,7 +141,7 @@ public class TreeGenerationUtils {
                     block.setType(Material.ACACIA_LEAVES);
                     Leaves blockData = (Leaves) block.getBlockData();
                     blockData.setPersistent(true);
-                    block.setBlockData(blockData);
+                    block.setBlockData(blockData, false);
 
                 }
             });
@@ -188,7 +189,7 @@ public class TreeGenerationUtils {
                             block.setType(Material.BIRCH_LEAVES);
                             Leaves blockData = (Leaves) block.getBlockData();
                             blockData.setPersistent(true);
-                            block.setBlockData(blockData);
+                            block.setBlockData(blockData, false);
 
                         }
                     });
@@ -224,6 +225,7 @@ public class TreeGenerationUtils {
         int diameter = Math.floorDiv(iterations, 10) + 2;
 
         branches.forEach(vectorLocationPair -> {
+
             double heightFromTop = iterations - Math.sqrt(vectorLocationPair.getB().distanceSquared(origin));
             int heightRatio = Math.round(Math.round(heightFromTop/iterations));
 
@@ -234,7 +236,7 @@ public class TreeGenerationUtils {
                     block.setType(Material.SPRUCE_LEAVES);
                     Leaves blockData = (Leaves) block.getBlockData();
                     blockData.setPersistent(true);
-                    block.setBlockData(blockData);
+                    block.setBlockData(blockData, false);
                 });
 
             }
@@ -286,7 +288,7 @@ public class TreeGenerationUtils {
                     block.setType(Material.OAK_LEAVES);
                     Leaves blockData = (Leaves) block.getBlockData();
                     blockData.setPersistent(true);
-                    block.setBlockData(blockData);
+                    block.setBlockData(blockData, false);
 
                 }
             });
@@ -333,7 +335,7 @@ public class TreeGenerationUtils {
                 block.setType(Material.JUNGLE_LEAVES);
                 Leaves blockData = (Leaves) block.getBlockData();
                 blockData.setPersistent(true);
-                block.setBlockData(blockData);
+                block.setBlockData(blockData, false);
             });
         });
 
@@ -383,7 +385,7 @@ public class TreeGenerationUtils {
                         block.setType(Material.CHERRY_LEAVES);
                         if (block.getBlockData() instanceof Leaves blockData) {
                             blockData.setPersistent(true);
-                            block.setBlockData(blockData);
+                            block.setBlockData(blockData, false);
                         }
 
                     }
