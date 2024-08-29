@@ -85,7 +85,7 @@ public class NoiseMaster {
         BiomeCategories category = null;
 
 
-        if (GenerationNoise.getNoise(NoiseCategories.WETLAND, x ,z ) > 0.65 && targetContinentalness >= -0.1 ) {
+        if (GenerationNoise.getNoise(NoiseCategories.WETLAND, x ,z ) > 0.85 && targetContinentalness >= -0.1 && targetContinentalness < 0.4 ) {
             category = BiomeCategories.WET;
         } else {
 
@@ -93,13 +93,13 @@ public class NoiseMaster {
                 category = BiomeCategories.OFF;
             } else if (targetContinentalness <= -0.1) { // coastal
                 category = BiomeCategories.COASTAL;
-            } else if (targetContinentalness > -0.1 && targetContinentalness <= 0.1) { // flatland
+            } else if (targetContinentalness > -0.1 && targetContinentalness <= 0.2) { // flatland
                 category = BiomeCategories.FLAT;
 
-            } else if (targetContinentalness > 0.1 && targetContinentalness <= 0.25) { // woodland
+            } else if (targetContinentalness > 0.2 && targetContinentalness <= 0.35) { // woodland
                 category = BiomeCategories.WOOD;
 
-            } else if (targetContinentalness > 0.25 && targetContinentalness <= 0.4) { // aridland
+            } else if (targetContinentalness > 0.35 && targetContinentalness <= 0.5) { // aridland
                 category = BiomeCategories.ARID;
 
             } else { // highland

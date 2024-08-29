@@ -186,11 +186,11 @@ public class CustomChunkGenerator extends ChunkGenerator {
         }
     }
 
-//    @NotNull
-//    @Override
-//    public List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
-//        return List.of( new TreePopulator(), new FloraPopulator(), new FeaturePopulator());
-//    }
+    @NotNull
+    @Override
+    public List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
+        return List.of( new TreePopulator(), new FloraPopulator(), new FeaturePopulator());
+    }
 
     @Override
     public boolean shouldGenerateMobs() {

@@ -17,7 +17,7 @@ import java.util.List;
 public class Meadow extends BiomeRepresentation implements TreeBiome, FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
-        put(BiomeLayers.SURFACE, List.of(Material.PINK_CONCRETE));
+        put(BiomeLayers.SURFACE, List.of(Material.GRASS_BLOCK));
         put(BiomeLayers.PRIMARY, List.of(Material.DIRT));
         put(BiomeLayers.SECONDARY, Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE));
         put(BiomeLayers.BASE, List.of(Material.BEDROCK));
@@ -33,6 +33,11 @@ public class Meadow extends BiomeRepresentation implements TreeBiome, FloraBiome
 
     @Override
     public HashMap<Material, Integer> getFlora() {
-        return FloraBiomeUtils.getFlowers(10);
+        HashMap<Material, Integer>flora = new HashMap<>();
+        flora.putAll(FloraBiomeUtils.getFlowers(1));
+        flora.put(Material.SHORT_GRASS, 10);
+        flora.put(Material.PINK_PETALS, 10);
+        flora.put(Material.ROSE_BUSH, 15);
+        return flora;
     }
 }

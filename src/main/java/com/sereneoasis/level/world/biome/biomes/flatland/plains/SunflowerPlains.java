@@ -13,7 +13,7 @@ import java.util.List;
 public class SunflowerPlains extends BiomeRepresentation implements FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
-        put(BiomeLayers.SURFACE, List.of(Material.GREEN_CONCRETE));
+        put(BiomeLayers.SURFACE, List.of(Material.GRASS_BLOCK));
         put(BiomeLayers.PRIMARY, List.of(Material.DIRT));
         put(BiomeLayers.SECONDARY, Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE));
         put(BiomeLayers.BASE, List.of(Material.BEDROCK));
@@ -25,7 +25,10 @@ public class SunflowerPlains extends BiomeRepresentation implements FloraBiome {
     @Override
     public HashMap<Material, Integer> getFlora() {
         HashMap<Material, Integer>flora = new HashMap<>();
-        flora.put( Material.SUNFLOWER, 40);
+        flora.put(Material.SHORT_GRASS, 20);
+        flora.put(Material.DANDELION, 10);
+        flora.put(Material.ROSE_BUSH, 3);
+        flora.put( Material.SUNFLOWER, 20);
         return flora;
     }
 }

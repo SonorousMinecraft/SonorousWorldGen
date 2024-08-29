@@ -18,7 +18,7 @@ public class IceSpikes extends BiomeRepresentation {
         put(BiomeLayers.BASE, List.of(Material.BEDROCK));
     }};
     public IceSpikes() {
-        super(org.bukkit.block.Biome.ICE_SPIKES, "Ice Spikes", layers, -1.0, 0.4, 0, BiomeCategories.FLAT);
+        super(org.bukkit.block.Biome.ICE_SPIKES, "Ice Spikes", layers, -0.9, 0.4, 0, BiomeCategories.FLAT);
     }
 }
 

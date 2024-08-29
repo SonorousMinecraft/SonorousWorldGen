@@ -2,6 +2,8 @@ package com.sereneoasis.level.world.biome.biomes.coastal.beach;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
+import com.sereneoasis.level.world.biome.biomefeatures.FloraBiomeUtils;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 
@@ -9,7 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Beach extends BiomeRepresentation {
+public class Beach extends BiomeRepresentation implements FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.SAND));
@@ -19,6 +21,14 @@ public class Beach extends BiomeRepresentation {
     }};
     public Beach() {
         super(org.bukkit.block.Biome.BEACH, "Beach", layers, 0.5, -0.3, 0.7, BiomeCategories.COASTAL);
+    }
+
+    @Override
+    public HashMap<Material, Integer> getFlora() {
+        HashMap<Material, Integer>flora = new HashMap<>();
+        flora.put(Material.CACTUS , 10);
+        flora.put(Material.DEAD_BUSH, 6);
+        return flora;
     }
 }
 

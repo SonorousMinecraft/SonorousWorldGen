@@ -11,6 +11,7 @@ public class ChunkUtils {
     public static final int AVERAGE_HEIGHT = 100;
     public static final int CONTINENTALNESS_DEVIATION = 100;
     public static final int TERRAIN_DEVIATION = 20;
+    public static final int DETAIL_DEVIATION = 3;
 
     public static float getCurrentY(int x, int z){
         float continentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x ,z);
@@ -26,7 +27,8 @@ public class ChunkUtils {
         }
         float currentY = AVERAGE_HEIGHT +
                 (continentalness * CONTINENTALNESS_DEVIATION) +
-                (terrain*TERRAIN_DEVIATION);
+                (terrain*TERRAIN_DEVIATION) +
+                DETAIL_DEVIATION * detail;
         return currentY;
     }
 

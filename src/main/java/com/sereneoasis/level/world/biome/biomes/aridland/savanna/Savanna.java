@@ -16,7 +16,7 @@ import java.util.List;
 public class Savanna extends BiomeRepresentation implements TreeBiome, FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
-        put(BiomeLayers.SURFACE, List.of(Material.RED_CONCRETE));
+        put(BiomeLayers.SURFACE, List.of(Material.GRASS_BLOCK));
         put(BiomeLayers.PRIMARY, List.of(Material.DIRT));
         put(BiomeLayers.SECONDARY, Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE));
         put(BiomeLayers.BASE, List.of(Material.BEDROCK));
@@ -35,8 +35,8 @@ public class Savanna extends BiomeRepresentation implements TreeBiome, FloraBiom
         HashMap<Material, Integer>flora = new HashMap<>();
         flora.put(Material.SHORT_GRASS , 10);
         flora.put(Material.TALL_GRASS, 5);
-        flora.put(Material.DEAD_BUSH, 5);
-        flora.putAll(FloraBiomeUtils.getFlowers(10));
+        flora.put(Material.DEAD_BUSH, 20);
+        flora.putAll(FloraBiomeUtils.getFlowers(1));
         return flora;
     }
 }

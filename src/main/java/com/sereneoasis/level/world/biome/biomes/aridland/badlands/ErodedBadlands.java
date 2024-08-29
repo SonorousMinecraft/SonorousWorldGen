@@ -2,6 +2,8 @@ package com.sereneoasis.level.world.biome.biomes.aridland.badlands;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
+import com.sereneoasis.level.world.biome.biomefeatures.FloraBiomeUtils;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 
@@ -9,7 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ErodedBadlands extends BiomeRepresentation {
+public class ErodedBadlands extends BiomeRepresentation implements FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.TERRACOTTA));
@@ -19,6 +21,13 @@ public class ErodedBadlands extends BiomeRepresentation {
     }};
     public ErodedBadlands() {
         super(org.bukkit.block.Biome.ERODED_BADLANDS, "Eroded Badlands", layers, 0.7, 0.6, -0.7, 0.3, BiomeCategories.ARID);
+    }
+
+    @Override
+    public HashMap<Material, Integer> getFlora() {
+        HashMap<Material, Integer>flora = new HashMap<>();
+        flora.put(Material.DEAD_BUSH, 20);
+        return flora;
     }
 }
 
