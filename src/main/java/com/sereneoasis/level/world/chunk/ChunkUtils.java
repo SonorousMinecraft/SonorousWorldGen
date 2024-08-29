@@ -5,7 +5,7 @@ import com.sereneoasis.level.world.noise.NoiseCategories;
 
 public class ChunkUtils {
 
-    public static final int Y_LIMIT = 240;
+    public static final int Y_LIMIT = 300;
     public static final int SEA_LEVEL = 50;
     public static final int LAYER_1_HEIGHT = 10;
     public static final int AVERAGE_HEIGHT = 100;
@@ -17,6 +17,13 @@ public class ChunkUtils {
         float detail = GenerationNoise.getNoise(NoiseCategories.DETAIl, x ,z);
         float terrain = GenerationNoise.getNoise(NoiseCategories.TERRAIN, x ,z);
 
+        if (terrain > 0.9){
+            terrain = (float) Math.pow(8, (terrain-0.9));
+        }
+
+        if (continentalness > 0.8){
+            continentalness = (float) Math.pow(4, (continentalness)) - 2.23143313302f;
+        }
         float currentY = AVERAGE_HEIGHT +
                 (continentalness * CONTINENTALNESS_DEVIATION) +
                 (terrain*TERRAIN_DEVIATION);

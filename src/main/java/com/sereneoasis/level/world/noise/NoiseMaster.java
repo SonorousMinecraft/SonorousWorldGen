@@ -15,8 +15,8 @@ public class NoiseMaster {
 
     public static void initNoise(){
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.004f, NoiseCategories.TERRAIN).
-                    attachFractal(FastNoiseLite.FractalType.FBm, 4, 1.0f, 0.3f, 0.2f);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.01f, NoiseCategories.TERRAIN).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 4, 1.3f, 0.3f, -0.5f);
 
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0002f, NoiseCategories.CONTINENTALNESS).
                     attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0, 0);
