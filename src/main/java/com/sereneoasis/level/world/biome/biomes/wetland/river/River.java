@@ -12,8 +12,8 @@ import java.util.List;
 public class River extends BiomeRepresentation {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
-        put(BiomeLayers.SURFACE, List.of(Material.WATER));
-        put(BiomeLayers.PRIMARY, List.of(Material.WATER));
+        put(BiomeLayers.SURFACE, List.of(Material.BLUE_CONCRETE));
+        put(BiomeLayers.PRIMARY, List.of(Material.BLUE_CONCRETE));
         put(BiomeLayers.SECONDARY, Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE));
         put(BiomeLayers.BASE, List.of(Material.BEDROCK));
     }};

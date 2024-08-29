@@ -6,7 +6,7 @@ import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseTypes;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
-import com.sereneoasis.npc.random.types.NPCMaster;
+import com.sereneoasis.npc.random.types.BasicNPC;
 import com.sereneoasis.utils.ClientboundPlayerInfoUpdatePacketWrapper;
 import com.sereneoasis.utils.NPCUtils;
 import com.sereneoasis.utils.PacketUtils;
@@ -76,7 +76,8 @@ public class SereneListener implements Listener {
 
 
 
-        if (KingdomUtils.isKingdomBuilding(x, z) && KingdomUtils.isInsideKingdom(x, z)) {
+//        if (KingdomUtils.isKingdomBuilding(x, z) && KingdomUtils.isInsideKingdom(x, z)) {
+        if (false) {
 
 //            int snapshotXLower = Math.max(0, snapshotX-5);
 //            int snapshotXHigher = Math.min(15, snapshotX+5);
@@ -102,13 +103,13 @@ public class SereneListener implements Listener {
             Location loc = new Location(event.getWorld(), x, finalY, z);
             loc.setYaw(90 * random.nextInt(0, 4));
                 StructureUtils.spawnStructure(loc, "village/plains/houses" + buildings.get(random.nextInt(buildings.size())));
-                NPCMaster npc = NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
+                BasicNPC npc = NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
                 npcs.put(chunk, npc);
         }
 //        }
     }
 
-    private static final ConcurrentHashMap<Chunk, NPCMaster > npcs = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Chunk, BasicNPC > npcs = new ConcurrentHashMap<>();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
@@ -139,7 +140,7 @@ public class SereneListener implements Listener {
             if (previousChunk == null ||  previousChunk.getX() != newChunk.getX() || previousChunk.getZ() != newChunk.getZ() ) {
 //                Bukkit.broadcastMessage("new chunk");
                 chunkTracker.put(player.getUniqueId(), newChunk);
-                NPCMaster serverPlayer = npcs.get(newChunk);
+                BasicNPC serverPlayer = npcs.get(newChunk);
                 if (serverPlayer != null) {
 //                    Bukkit.broadcastMessage("robot on");
                     NPCUtils.addNPC(player, serverPlayer);

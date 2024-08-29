@@ -63,9 +63,10 @@ public class NoiseMaster {
      * Calculates which biome representation represents a specified location
      * @param x the X of the Location we want to obtain the biome representation for
      * @param z the Z of the Location we want to obtain the biome representation for
+     * @param ocean whether under the sea level
      * @return A best fitting biome representation
      */
-    private static BiomeRepresentation getBiomeRepresentation(int x, int z){
+    private static BiomeRepresentation getBiomeRepresentation(int x, int z, boolean ocean){
         double targetContinentalness = GenerationNoise.getNoise(NoiseTypes.CONTINENTALNESS, x, z) ;
         double targetTemeprature = GenerationNoise.getNoise(NoiseTypes.TEMPERATURE, x, z) ;
         double targetHumidity = GenerationNoise.getNoise(NoiseTypes.HUMIDITY, x, z) ;
@@ -73,13 +74,14 @@ public class NoiseMaster {
 
         BiomeCategories category = null;
 
+
         if (GenerationNoise.getNoise(NoiseTypes.WETLAND, x ,z ) > 0.65 && targetContinentalness >= -0.1 ) {
             category = BiomeCategories.WET;
         } else {
 
-            if (targetContinentalness <= -0.2) { // offland
+            if (targetContinentalness <= -0.2 && ocean) { // offland
                 category = BiomeCategories.OFF;
-            } else if (targetContinentalness > -0.2 && targetContinentalness <= -0.1) { // coastal
+            } else if (targetContinentalness <= -0.1) { // coastal
                 category = BiomeCategories.COASTAL;
             } else if (targetContinentalness > -0.1 && targetContinentalness <= 0.1) { // flatland
                 category = BiomeCategories.FLAT;
@@ -119,20 +121,22 @@ public class NoiseMaster {
      * Calculates which biome represents a specified location
      * @param x the X of the Location we want to obtain the biome for
      * @param z the Z of the Location we want to obtain the biome for
+     * @param ocean whether under the sea level
      * @return A best fitting biome
      */
-    public static Biome getBiome(int x, int z){
-       return getBiomeRepresentation(x, z).getBiome();
+    public static Biome getBiome(int x, int z, boolean ocean){
+       return getBiomeRepresentation(x, z, ocean).getBiome();
     }
 
     /***
      * Calculates what the layers of the terrain at a given location should be
      * @param x the X of the Location we want to obtain the Biome for
      * @param z the Z of the Location we want to obtain the Biome for
+     * @param ocean whether under the sea level
      * @return A best fitting Biome
      */
-    public static HashMap<BiomeLayers, List<Material>> getBiomeLayers(int x, int z){
-        return getBiomeRepresentation(x, z).getLayers();
+    public static HashMap<BiomeLayers, List<Material>> getBiomeLayers(int x, int z, boolean ocean){
+        return getBiomeRepresentation(x, z, ocean).getLayers();
     }
 
     /***
