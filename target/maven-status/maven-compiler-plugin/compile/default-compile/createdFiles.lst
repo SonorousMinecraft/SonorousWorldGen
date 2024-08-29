@@ -19,6 +19,7 @@ com/sereneoasis/level/world/biome/biomes/flatland/IceSpikes.class
 com/sereneoasis/level/world/biome/BiomeRepresentation.class
 com/sereneoasis/level/world/biome/biomes/wetland/river/River$1.class
 com/sereneoasis/level/world/biome/biomes/wetland/river/FrozenRiver$1.class
+com/sereneoasis/level/world/noise/NoiseCategories.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/warm/DeepLukewarmOcean$1.class
 com/sereneoasis/level/world/biome/biomefeatures/TreeBiome.class
 com/sereneoasis/libs/FastNoiseLite$CellularDistanceFunction.class
@@ -26,7 +27,6 @@ com/sereneoasis/level/world/chunk/populator/FeaturePopulator.class
 com/sereneoasis/level/world/biome/biomes/flatland/IceSpikes$1.class
 com/sereneoasis/level/world/biome/biomes/flatland/plains/Plains.class
 com/sereneoasis/level/world/biome/biomes/aridland/savanna/SavannaPlateau$1.class
-com/sereneoasis/level/world/noise/GenerationNoise$1.class
 com/sereneoasis/level/world/biome/biomes/highland/SnowySlopes.class
 com/sereneoasis/level/world/biome/biomefeatures/Feature.class
 com/sereneoasis/level/world/biome/biomes/highland/peaks/FrozenPeaks$1.class
@@ -92,7 +92,6 @@ com/sereneoasis/level/world/biome/biomes/highland/groves/Grove.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/DeepColdOcean.class
 com/sereneoasis/utils/SchematicUtils.class
 com/sereneoasis/level/world/biome/biomes/woodland/forest/FlowerForest$1.class
-com/sereneoasis/level/world/noise/NoiseTypes.class
 com/sereneoasis/utils/ReflectionUtils.class
 com/sereneoasis/level/world/biome/biomes/highland/Meadow.class
 com/sereneoasis/level/world/biome/CustomBiomeProvider.class
@@ -111,6 +110,7 @@ com/sereneoasis/command/SerenityCommand.class
 com/sereneoasis/level/world/biome/biomes/woodland/jungle/BambooJungle.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/DeepFrozenOcean$1.class
 com/sereneoasis/config/FileManager.class
+com/sereneoasis/level/world/chunk/ChunkUtils.class
 com/sereneoasis/level/world/biome/biomes/highland/WindsweptForest$1.class
 com/sereneoasis/level/world/biome/biomefeatures/DefaultFeatures.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/warm/DeepLukewarmOcean.class

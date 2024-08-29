@@ -1,5 +1,6 @@
 package com.sereneoasis.level.world.biome;
 
+import com.sereneoasis.level.world.chunk.ChunkUtils;
 import com.sereneoasis.level.world.noise.NoiseMaster;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
@@ -16,7 +17,11 @@ public class CustomBiomeProvider extends BiomeProvider {
     @NotNull
     @Override
     public Biome getBiome(@NotNull WorldInfo worldInfo, int x, int y, int z) {
-        return NoiseMaster.getBiome(x, z);
+
+        float currentY = ChunkUtils.getCurrentY(x, z);
+
+        boolean ocean = currentY <= ChunkUtils.SEA_LEVEL;
+        return NoiseMaster.getBiome(x, z, ocean);
     }
 
     @NotNull

@@ -3,9 +3,9 @@ package com.sereneoasis.level.world.noise;
 /***
  * The types of noise.
  */
-public enum NoiseTypes {
+public enum NoiseCategories {
 
-    TERRAIN_NOISE,
+    TERRAIN,
     CONTINENTALNESS,
     TEMPERATURE,
     HUMIDITY,

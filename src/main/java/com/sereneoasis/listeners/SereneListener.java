@@ -1,18 +1,10 @@
 package com.sereneoasis.listeners;
 
-import com.sereneoasis.SereneNPCs;
-import com.sereneoasis.SereneWorldGen;
 import com.sereneoasis.level.world.KingdomUtils;
-import com.sereneoasis.level.world.noise.GenerationNoise;
-import com.sereneoasis.level.world.noise.NoiseTypes;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
 import com.sereneoasis.npc.random.types.BasicNPC;
-import com.sereneoasis.utils.ClientboundPlayerInfoUpdatePacketWrapper;
 import com.sereneoasis.utils.NPCUtils;
-import com.sereneoasis.utils.PacketUtils;
 import com.sereneoasis.utils.StructureUtils;
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
-import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -21,14 +13,12 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 public class SereneListener implements Listener {
 
@@ -87,8 +77,8 @@ public class SereneListener implements Listener {
 //            int snapshotZHigher = Math.min(15, snapshotZ+5);
 //
 //
-//            if  ( (GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,  snapshotXLower + chunk.getX() * 16 , snapshotZLower + chunk.getZ() * 16) > 0.7) &&
-//                    GenerationNoise.getNoise(NoiseTypes.KINGDOM_BUILDINGS,   snapshotXHigher + chunk.getX() * 16 ,  snapshotZHigher  + chunk.getZ() * 16) > 0.7 ) {
+//            if  ( (GenerationNoise.getNoise(NoiseCategories.KINGDOM_BUILDINGS,  snapshotXLower + chunk.getX() * 16 , snapshotZLower + chunk.getZ() * 16) > 0.7) &&
+//                    GenerationNoise.getNoise(NoiseCategories.KINGDOM_BUILDINGS,   snapshotXHigher + chunk.getX() * 16 ,  snapshotZHigher  + chunk.getZ() * 16) > 0.7 ) {
 
 
             while (event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {

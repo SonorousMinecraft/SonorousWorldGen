@@ -30,7 +30,7 @@ public class TreePopulator extends BlockPopulator {
             limitedRegion.setType(location, Material.AIR);
             limitedRegion.generateTree(location, random, BiomeRepresentation.getTreeTypes(biome).get(random.nextInt(BiomeRepresentation.getTreeTypes(biome).size())));
 
-//            if (GenerationNoise.getNoise(NoiseTypes.CUSTOM_TREES, chunkX * 16, chunkZ * 16) > 0.5 && (GenerationNoise.getNoise(NoiseTypes.CUSTOM_TREES, chunkX * 16, chunkZ * 16) < 0.55)){
+//            if (GenerationNoise.getNoise(NoiseCategories.CUSTOM_TREES, chunkX * 16, chunkZ * 16) > 0.5 && (GenerationNoise.getNoise(NoiseCategories.CUSTOM_TREES, chunkX * 16, chunkZ * 16) < 0.55)){
 //                TreeGenerationUtils.generateCherryTree(location, 5, random);
 //            }
         }

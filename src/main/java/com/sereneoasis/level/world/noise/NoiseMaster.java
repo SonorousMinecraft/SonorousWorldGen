@@ -15,46 +15,56 @@ public class NoiseMaster {
 
     public static void initNoise(){
 
-            new GenerationNoise(0.0001f, 2, NoiseTypes.TERRAIN_NOISE);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.004f, NoiseCategories.TERRAIN).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 4, 1.0f, 0.3f, 0.2f);
 
-            new GenerationNoise(0.0002f, 1, NoiseTypes.CONTINENTALNESS);
-            new GenerationNoise(0.001f, 2, NoiseTypes.TEMPERATURE);
-            new GenerationNoise(0.001f, 2, NoiseTypes.HUMIDITY);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0002f, NoiseCategories.CONTINENTALNESS).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0, 0);
 
-            new GenerationNoise(0.01f, 1, NoiseTypes.DETAIl);
-            new GenerationNoise(0.001f, 1, NoiseTypes.WEIRDNESS);
-            new GenerationNoise(0.005f, 3, NoiseTypes.WETLAND, 0.5f, 10f, 1.0f, 1.0f);
-            new GenerationNoise(0.01F, 3, NoiseTypes.CAVES);
-            new GenerationNoise(0.05F, 2, NoiseTypes.FLORA);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.TEMPERATURE).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
 
-            new GenerationNoise(0.02F, 2, NoiseTypes.CUSTOM_TREES);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.HUMIDITY).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
 
-            new GenerationNoise(0.002f, 0f, 1.3f, NoiseTypes.KINGDOM_WALLS, FastNoiseLite.CellularReturnType.Distance2Div  );
-            new GenerationNoise(0.002f, 0f, 1.3f, NoiseTypes.KINGDOM_BORDERS, FastNoiseLite.CellularReturnType.CellValue);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.01f, NoiseCategories.DETAIl).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 1, 0, 0, 0);
 
-            new GenerationNoise(0.002f, 2,1.0f, 25f, 40f, 1.3f, NoiseTypes.KINGDOM_BUILDINGS,FastNoiseLite.CellularDistanceFunction.Manhattan, FastNoiseLite.CellularReturnType.Distance2Div);
-            new GenerationNoise(0.002f, 2,-0.1f, 25f, 40f, 1.3f, NoiseTypes.KINGDOM_PATHS, FastNoiseLite.CellularDistanceFunction.Manhattan,  FastNoiseLite.CellularReturnType.Distance2Div);
-        new GenerationNoise(0.02f, 3, NoiseTypes.ROADS, 0.5f, 10f, 1.0f, 1.0f);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.WEIRDNESS).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 1, 0, 0, 0);
 
-    }
+         new GenerationNoise(FastNoiseLite.NoiseType.Perlin, 0.005f, NoiseCategories.WETLAND).
+                attachFractal(FastNoiseLite.FractalType.PingPong, 3, 10, 0.5f, 0).
+                 attachPingPong(1.0f);
 
-    /***
-     * Calculates a score to represent what the height of the terrain should be at a given point
-     * @param chunkX The value representing the Chunk X (it's actual X coordinate divided by 16)
-     * @param chunkZ The value representing the Chunk Z (it's actual Z coordinate divided by 16)
-     * @param x The X value relative to the chunk (from 0-15)
-     * @param z The Z value relative to the chunk (from 0-15)
-     * @return the noise at a given location used to calculate the Y position of the surface
-     */
-    public static float getMasterNoise(int chunkX, int chunkZ, int x, int z) {
-        float continentalWeight = 10;
-        float terrainWeight = 2;
-        float detailWeight = 0.5f;
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.01F, NoiseCategories.CAVES).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0, 0);
 
-        float uncappedNoise = (GenerationNoise.getNoise(NoiseTypes.CONTINENTALNESS, x + (chunkX * 16), z + (chunkZ * 16)) * continentalWeight) +
-                ( GenerationNoise.getNoise(NoiseTypes.TERRAIN_NOISE, x + (chunkX * 16), z + (chunkZ * 16)) * terrainWeight  )
-                + (GenerationNoise.getNoise(NoiseTypes.DETAIl, x + (chunkX * 16), z + (chunkZ * 16)) * detailWeight);
-        return uncappedNoise / ((continentalWeight + terrainWeight + detailWeight)/4);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.05F, NoiseCategories.FLORA).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
+
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2,0.02F, NoiseCategories.CUSTOM_TREES).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
+
+            new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_WALLS ).
+                    attachFractal(FastNoiseLite.FractalType.Ridged, 3, 0f, 0, 0).
+                    attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
+
+        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_BORDERS ).
+                attachFractal(FastNoiseLite.FractalType.Ridged, 3, 0f, 0, 0).
+                attachCellular(1.3f, FastNoiseLite.CellularReturnType.CellValue);
+
+
+        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_BUILDINGS ).
+                attachFractal(FastNoiseLite.FractalType.Ridged, 2, 1.0f, 25f, 40f).
+                attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
+
+        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_PATHS ).
+                attachFractal(FastNoiseLite.FractalType.Ridged, 2, -0.1f, 25f, 40f).
+                attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
+
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.002f, NoiseCategories.ROADS).
+                attachFractal(FastNoiseLite.FractalType.FBm, 1, 0, 0, 0);
 
     }
 
@@ -67,15 +77,15 @@ public class NoiseMaster {
      * @return A best fitting biome representation
      */
     private static BiomeRepresentation getBiomeRepresentation(int x, int z, boolean ocean){
-        double targetContinentalness = GenerationNoise.getNoise(NoiseTypes.CONTINENTALNESS, x, z) ;
-        double targetTemeprature = GenerationNoise.getNoise(NoiseTypes.TEMPERATURE, x, z) ;
-        double targetHumidity = GenerationNoise.getNoise(NoiseTypes.HUMIDITY, x, z) ;
-        double weirdness = GenerationNoise.getNoise(NoiseTypes.WEIRDNESS, x ,z) ;
+        double targetContinentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
+        double targetTemeprature = GenerationNoise.getNoise(NoiseCategories.TEMPERATURE, x, z) ;
+        double targetHumidity = GenerationNoise.getNoise(NoiseCategories.HUMIDITY, x, z) ;
+        double weirdness = GenerationNoise.getNoise(NoiseCategories.WEIRDNESS, x ,z) ;
 
         BiomeCategories category = null;
 
 
-        if (GenerationNoise.getNoise(NoiseTypes.WETLAND, x ,z ) > 0.65 && targetContinentalness >= -0.1 ) {
+        if (GenerationNoise.getNoise(NoiseCategories.WETLAND, x ,z ) > 0.65 && targetContinentalness >= -0.1 ) {
             category = BiomeCategories.WET;
         } else {
 
@@ -149,7 +159,7 @@ public class NoiseMaster {
      * @return A value from -1 to 1 used to control cave generation
      */
     public static float getCaveNoise(int chunkX, int chunkZ, int x, int y, int z){
-        return GenerationNoise.getNoise(NoiseTypes.CAVES, chunkX * 16 + x, y, chunkZ * 16 + z);
+        return GenerationNoise.getNoise(NoiseCategories.CAVES, chunkX * 16 + x, y, chunkZ * 16 + z);
     }
 
     /***
@@ -161,7 +171,7 @@ public class NoiseMaster {
      * @return A value from -1 to 1 used to control flora generation
      */
     public static float getFloraNoise(int chunkX, int chunkZ, int x, int z){
-        return GenerationNoise.getNoise(NoiseTypes.FLORA, chunkX * 16 + x, chunkZ * 16 + z);
+        return GenerationNoise.getNoise(NoiseCategories.FLORA, chunkX * 16 + x, chunkZ * 16 + z);
     }
 
 }

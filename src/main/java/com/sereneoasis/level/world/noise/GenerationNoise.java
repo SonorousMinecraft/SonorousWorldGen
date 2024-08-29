@@ -2,7 +2,6 @@ package com.sereneoasis.level.world.noise;
 
 import com.sereneoasis.libs.FastNoiseLite;
 
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /***
@@ -11,135 +10,92 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GenerationNoise {
 
     /***
-     * A HashMap with NoiseTypes as keys and noise functions as values
+     * A HashMap with NoiseCategories as keys and noise functions as values
      */
-    private static final ConcurrentHashMap<NoiseTypes, FastNoiseLite> NOISE_TYPE_FUNCTION_MAP = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<NoiseCategories, FastNoiseLite> NOISE_TYPE_FUNCTION_MAP = new ConcurrentHashMap<>();
 
     /***
      * Retrieves the noise value for a given Location
-     * @param noiseTypes the type of noise to retrieve the value for
+     * @param noiseCategories the type of noise to retrieve the value for
      * @param x the X value of a location
      * @param z the Y value of a location
      * @return a value from -1 to 1 representing the noise, which may be stretched
      */
-    public static float getNoise(NoiseTypes noiseTypes, int x, int z){
-        float noise = NOISE_TYPE_FUNCTION_MAP.get(noiseTypes).GetNoise(x, z);
-        switch (noiseTypes){
-            case CONTINENTALNESS -> {
-                return noise*1.7f;
-            }
-            case HUMIDITY, TEMPERATURE -> {
-                return noise*1.5f;
-            }
-            case CUSTOM_TREES -> {
-                return noise *1.6f;
-            }
-            default -> {
-                return noise;
-            }
-        }
+    public static float getNoise(NoiseCategories noiseCategories, int x, int z){
+        float noise = NOISE_TYPE_FUNCTION_MAP.get(noiseCategories).GetNoise(x, z);
+//        switch (noiseCategories){
+//            case CONTINENTALNESS -> {
+//                return noise*1.7f;
+//            }
+//            case HUMIDITY, TEMPERATURE -> {
+//                return noise*1.5f;
+//            }
+//            case CUSTOM_TREES -> {
+//                return noise *1.6f;
+//            }
+//            default -> {
+//                return noise;
+//            }
+//        }
+        return noise;
     }
 
     /***
      * Retrieves the noise value for a given Location when the Y value is relevant
-     * @param noiseTypes the type of noise to retrieve the value for
+     * @param noiseCategories the type of noise to retrieve the value for
      * @param x the X value of a location
      * @param y the Y value of a location
      * @param z the Z value of a location
      * @return a value from -1 to 1 representing the noise
      */
-    public static float getNoise(NoiseTypes noiseTypes, int x, int y, int z){
-        return NOISE_TYPE_FUNCTION_MAP.get(noiseTypes).GetNoise(x, y, z) ;
+    public static float getNoise(NoiseCategories noiseCategories, int x, int y, int z){
+        return NOISE_TYPE_FUNCTION_MAP.get(noiseCategories).GetNoise(x, y, z) ;
     }
 
     private final FastNoiseLite noise;
 
     /***
-     * Generates normal Perlin Noise
+     * Generates noise
+     * @param noiseType
      * @param frequency
-     * @param octaves
-     * @param noiseTypes
+     * @param noiseCategories
      */
-    public GenerationNoise(float frequency, int octaves, NoiseTypes noiseTypes){
+    public GenerationNoise(FastNoiseLite.NoiseType noiseType, float frequency, NoiseCategories noiseCategories){
         noise = new FastNoiseLite();
-        noise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
+        noise.SetNoiseType(noiseType);
         noise.SetFrequency(frequency);
-        noise.SetFractalOctaves(octaves);
-        noise.SetFractalType(FastNoiseLite.FractalType.FBm);
 
-        NOISE_TYPE_FUNCTION_MAP.put(noiseTypes, noise);
+        NOISE_TYPE_FUNCTION_MAP.put(noiseCategories, noise);
     }
 
 
-
-
-    /***
-     * Generates Snake-like noise
-     */
-    public GenerationNoise(float frequency, int octaves, NoiseTypes noiseTypes, float lacunarity, float gain, float pingPongStrength, float domainWarpAmp){
-        noise = new FastNoiseLite();
-        noise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
-        noise.SetFrequency(frequency);
+    public GenerationNoise attachFractal(FastNoiseLite.FractalType fractalType,int octaves, float gain, float lacunarity, float weightedStrength ){
+        noise.SetFractalType(fractalType);
         noise.SetFractalOctaves(octaves);
-        noise.SetFractalType(FastNoiseLite.FractalType.PingPong);
-        noise.SetFractalLacunarity(lacunarity);
         noise.SetFractalGain(gain);
+        noise.SetFractalLacunarity(lacunarity);
+        noise.SetFractalWeightedStrength(weightedStrength);
+        return this;
+    }
+
+    public GenerationNoise attachPingPong(float pingPongStrength){
         noise.SetFractalPingPongStrength(pingPongStrength);
 
+        return this;
+    }
+
+    public GenerationNoise attachDomainWarp( float domainWarpAmp){
         noise.SetDomainWarpType(FastNoiseLite.DomainWarpType.OpenSimplex2);
         noise.SetDomainWarpAmp(domainWarpAmp);
-
-        NOISE_TYPE_FUNCTION_MAP.put(noiseTypes, noise);
+        return this;
     }
 
-    public GenerationNoise(float frequency, float gain, float jitter, NoiseTypes types, FastNoiseLite.CellularReturnType cellularReturnType) {
-        noise = new FastNoiseLite();
-        noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
-        noise.SetFrequency(frequency);
-//        noise.SetFractalOctaves(octaves);
-        noise.SetFractalType(FastNoiseLite.FractalType.Ridged);
-        noise.SetFractalGain(gain);
-        noise.SetFractalLacunarity(0);
-
+    public GenerationNoise attachCellular(float jitter, FastNoiseLite.CellularReturnType cellularReturnType){
         noise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.Manhattan);
         noise.SetCellularReturnType(cellularReturnType);
         noise.SetCellularJitter(jitter);
-        NOISE_TYPE_FUNCTION_MAP.put(types, noise);
+        return this;
     }
-
-    public GenerationNoise(float frequency, int octaves, float gain, float lacunarity, float weightedStrength, float jitter, NoiseTypes types, FastNoiseLite.CellularReturnType cellularReturnType) {
-        noise = new FastNoiseLite();
-        noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
-        noise.SetFrequency(frequency);
-        noise.SetFractalOctaves(octaves);
-        noise.SetFractalType(FastNoiseLite.FractalType.Ridged);
-        noise.SetFractalGain(gain);
-        noise.SetFractalLacunarity(lacunarity);
-        noise.SetFractalWeightedStrength(weightedStrength);
-
-        noise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.Manhattan);
-        noise.SetCellularReturnType(cellularReturnType);
-        noise.SetCellularJitter(jitter);
-        NOISE_TYPE_FUNCTION_MAP.put(types, noise);
-    }
-
-    public GenerationNoise(float frequency, int octaves, float gain, float lacunarity, float weightedStrength, float jitter, NoiseTypes types, FastNoiseLite.CellularDistanceFunction cellularDistanceFunction, FastNoiseLite.CellularReturnType cellularReturnType) {
-        noise = new FastNoiseLite();
-        noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
-        noise.SetFrequency(frequency);
-        noise.SetFractalOctaves(octaves);
-        noise.SetFractalType(FastNoiseLite.FractalType.Ridged);
-        noise.SetFractalGain(gain);
-        noise.SetFractalLacunarity(lacunarity);
-        noise.SetFractalWeightedStrength(weightedStrength);
-
-        noise.SetCellularDistanceFunction(cellularDistanceFunction);
-        noise.SetCellularReturnType(cellularReturnType);
-        noise.SetCellularJitter(jitter);
-        NOISE_TYPE_FUNCTION_MAP.put(types, noise);
-    }
-
-
 
 
 }
