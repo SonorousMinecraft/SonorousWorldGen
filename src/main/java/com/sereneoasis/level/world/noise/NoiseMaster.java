@@ -33,12 +33,12 @@ public class NoiseMaster {
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.WEIRDNESS).
                     attachFractal(FastNoiseLite.FractalType.FBm, 1, 0, 0, 0);
 
-         new GenerationNoise(FastNoiseLite.NoiseType.Perlin, 0.005f, NoiseCategories.WETLAND).
+         new GenerationNoise(FastNoiseLite.NoiseType.Perlin, 0.001f, NoiseCategories.WETLAND).
                 attachFractal(FastNoiseLite.FractalType.PingPong, 3, 10, 0.5f, 0).
                  attachPingPong(1.0f);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.01F, NoiseCategories.CAVES).
-                    attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0, 0);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001F, NoiseCategories.CAVES).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0.4f, 0);
 
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.05F, NoiseCategories.FLORA).
                     attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
@@ -85,7 +85,7 @@ public class NoiseMaster {
         BiomeCategories category = null;
 
 
-        if (GenerationNoise.getNoise(NoiseCategories.WETLAND, x ,z ) > 0.85 && targetContinentalness >= -0.1 && targetContinentalness < 0.4 ) {
+        if (GenerationNoise.getNoise(NoiseCategories.WETLAND, x ,z ) > 0.95 && targetContinentalness >= -0.1 && targetContinentalness < 0.4 ) {
             category = BiomeCategories.WET;
         } else {
 

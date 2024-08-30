@@ -28,7 +28,7 @@ public class TreePopulator extends BlockPopulator {
         Biome biome = limitedRegion.getBiome(location);
         if (BiomeRepresentation.isTreeBiome(biome)){
 
-            if (limitedRegion.getType(x, y, z).equals(Material.GRASS_BLOCK)) {
+            if (PopulatorUtils.isSurface(biome, limitedRegion.getType(x,y,z))) {
                 limitedRegion.setType(location, Material.AIR);
                 limitedRegion.generateTree(location, random, BiomeRepresentation.getTreeTypes(biome).get(random.nextInt(BiomeRepresentation.getTreeTypes(biome).size())));
             }

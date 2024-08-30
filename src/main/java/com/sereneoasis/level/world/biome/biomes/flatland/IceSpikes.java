@@ -2,6 +2,9 @@ package com.sereneoasis.level.world.biome.biomes.flatland;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.DefaultFeatures;
+import com.sereneoasis.level.world.biome.biomefeatures.Feature;
+import com.sereneoasis.level.world.biome.biomefeatures.FeatureBiome;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 
@@ -9,7 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class IceSpikes extends BiomeRepresentation {
+public class IceSpikes extends BiomeRepresentation implements FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.BLUE_ICE));
@@ -19,6 +22,13 @@ public class IceSpikes extends BiomeRepresentation {
     }};
     public IceSpikes() {
         super(org.bukkit.block.Biome.ICE_SPIKES, "Ice Spikes", layers, -0.9, 0.4, 0, BiomeCategories.FLAT);
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
+        return feature;
     }
 }
 

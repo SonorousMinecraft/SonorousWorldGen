@@ -51,6 +51,7 @@ com/sereneoasis/level/world/biome/biomes/aridland/badlands/ErodedBadlands$1.clas
 com/sereneoasis/level/world/biome/biomes/coastal/beach/Beach$1.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/warm/WarmOcean$1.class
 com/sereneoasis/level/world/noise/NoiseMaster.class
+com/sereneoasis/level/world/chunk/populator/PopulatorUtils.class
 com/sereneoasis/config/ConfigFile.class
 com/sereneoasis/level/world/biome/biomes/coastal/StonyShore.class
 com/sereneoasis/level/world/biome/biomes/coastal/beach/SnowyBeach.class

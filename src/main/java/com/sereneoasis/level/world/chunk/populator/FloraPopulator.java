@@ -31,8 +31,9 @@ public class FloraPopulator extends BlockPopulator {
 
                         while (limitedRegion.getType(x, y, z).isAir() && y > -64) y--;
 
-                        if (!Tag.LEAVES.isTagged(limitedRegion.getType(x, y, z))) {
-                            limitedRegion.setType(x, y + 1, z, material);
+                        if (PopulatorUtils.isSurface(biome, limitedRegion.getType(x,y,z))) {
+                            limitedRegion.setType(x, y+1, z, material);
+
                         }
                     }
 //                }

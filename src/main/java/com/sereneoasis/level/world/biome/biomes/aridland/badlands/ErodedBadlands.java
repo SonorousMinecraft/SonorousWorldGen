@@ -29,5 +29,7 @@ public class ErodedBadlands extends BiomeRepresentation implements FloraBiome {
         flora.put(Material.DEAD_BUSH, 20);
         return flora;
     }
+
+
 }
 

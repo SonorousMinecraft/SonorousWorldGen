@@ -159,6 +159,9 @@ public abstract class BiomeRepresentation {
         if (this instanceof FloraBiome floraBiome){
             FLORA_BIOMES.put(biome, floraBiome);
         }
+        if (this instanceof FeatureBiome featureBiome){
+            FEATURE_BIOMES.put(biome, featureBiome);
+        }
 
         HashSet<BiomeRepresentation> categoryBiomes = BIOME_CATEGORIES_MAP.getOrDefault(categories, new HashSet<>());
         categoryBiomes.add(this);
