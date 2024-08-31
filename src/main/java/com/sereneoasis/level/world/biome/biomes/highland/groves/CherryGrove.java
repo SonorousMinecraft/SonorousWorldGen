@@ -41,7 +41,7 @@ public class CherryGrove extends BiomeRepresentation implements TreeBiome, Flora
     @Override
     public HashMap<Feature, Double> getFeatures() {
         HashMap<Feature, Double>feature = new HashMap<>();
-        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
+        feature.put(DefaultFeatures.CRYSTALS.get(), 0.1);
         return feature;
     }
 }

@@ -2,6 +2,7 @@ package com.sereneoasis.level.world.biome.biomes.wetland.swamp;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
 import com.sereneoasis.level.world.biome.biomefeatures.TreeBiome;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
@@ -11,7 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Swamp extends BiomeRepresentation implements TreeBiome {
+public class Swamp extends BiomeRepresentation implements TreeBiome, FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, Arrays.asList(Material.WATER, Material.MUD, Material.DIRT));
@@ -26,5 +27,13 @@ public class Swamp extends BiomeRepresentation implements TreeBiome {
     @Override
     public TreeType[] getTreeType() {
         return new TreeType[]{TreeType.SWAMP};
+    }
+
+    @Override
+    public HashMap<Material, Integer> getFlora() {
+        HashMap<Material, Integer>flora = new HashMap<>();
+        flora.put(Material.SHORT_GRASS, 20);
+        flora.put(Material.BIG_DRIPLEAF, 10);
+        return flora;
     }
 }

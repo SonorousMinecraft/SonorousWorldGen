@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Beach extends BiomeRepresentation implements FloraBiome, FeatureBiome {
+public class Beach extends BiomeRepresentation implements FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.SAND));
@@ -30,11 +30,6 @@ public class Beach extends BiomeRepresentation implements FloraBiome, FeatureBio
         return flora;
     }
 
-    @Override
-    public HashMap<Feature, Double> getFeatures() {
-        HashMap<Feature, Double>feature = new HashMap<>();
-        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
-        return feature;
-    }
+
 }
 

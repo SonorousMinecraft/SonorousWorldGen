@@ -35,7 +35,7 @@ public class SnowyBeach extends BiomeRepresentation implements FloraBiome, Featu
     @Override
     public HashMap<Feature, Double> getFeatures() {
         HashMap<Feature, Double>feature = new HashMap<>();
-        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
+        feature.put(DefaultFeatures.SNOW_CLUMP.get(), 0.2);
         return feature;
     }
 }

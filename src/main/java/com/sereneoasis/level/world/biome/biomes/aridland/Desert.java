@@ -28,7 +28,6 @@ public class Desert extends BiomeRepresentation implements FloraBiome, FeatureBi
     @Override
     public HashMap<Material, Integer> getFlora() {
         HashMap<Material, Integer>flora = new HashMap<>();
-        flora.put(Material.CACTUS, 10);
         flora.put(Material.DEAD_BUSH, 5);
         return flora;
     }
@@ -36,7 +35,7 @@ public class Desert extends BiomeRepresentation implements FloraBiome, FeatureBi
     @Override
     public HashMap<Feature, Double> getFeatures() {
         HashMap<Feature, Double>feature = new HashMap<>();
-        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
+        feature.put(DefaultFeatures.GRAVEL_CLUMP.get(), 0.1);
         return feature;
     }
 }

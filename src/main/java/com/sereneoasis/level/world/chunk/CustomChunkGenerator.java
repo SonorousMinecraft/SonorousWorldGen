@@ -86,7 +86,7 @@ public class CustomChunkGenerator extends ChunkGenerator {
 //                            }
                         }
                     }
-                    else if(y < ChunkUtils.SEA_LEVEL) {
+                    else if(y <= ChunkUtils.SEA_LEVEL) {
                         chunkData.setBlock(x, y, z, Material.WATER);
                     }
                     //GenerationNoise.getNoise(NoiseCategories.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7

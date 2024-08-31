@@ -27,7 +27,7 @@ public class IceSpikes extends BiomeRepresentation implements FeatureBiome {
     @Override
     public HashMap<Feature, Double> getFeatures() {
         HashMap<Feature, Double>feature = new HashMap<>();
-        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
+        feature.put(DefaultFeatures.PACKED_ICE_SPIKE.get(), 0.3);
         return feature;
     }
 }

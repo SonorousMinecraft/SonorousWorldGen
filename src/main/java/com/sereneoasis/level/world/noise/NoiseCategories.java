@@ -17,7 +17,7 @@ public enum NoiseCategories {
 
     FLORA,
 
-    WETLAND,
+    RIVER,
 
     CUSTOM_TREES,
 

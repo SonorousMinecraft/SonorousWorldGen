@@ -2,6 +2,9 @@ package com.sereneoasis.level.world.biome.biomes.woodland.jungle;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.DefaultFeatures;
+import com.sereneoasis.level.world.biome.biomefeatures.Feature;
+import com.sereneoasis.level.world.biome.biomefeatures.FeatureBiome;
 import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
@@ -10,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class BambooJungle extends BiomeRepresentation implements FloraBiome {
+public class BambooJungle extends BiomeRepresentation implements FloraBiome, FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.GRASS_BLOCK));
@@ -30,6 +33,14 @@ public class BambooJungle extends BiomeRepresentation implements FloraBiome {
         flora.put(Material.BAMBOO, 30);
 
         return flora;
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.JUNGLE_LOGS.get(), 0.05);
+        feature.put(DefaultFeatures.BAMBOO.get(), 0.1);
+        return feature;
     }
 }
 

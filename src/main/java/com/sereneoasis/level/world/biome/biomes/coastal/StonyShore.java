@@ -2,6 +2,9 @@ package com.sereneoasis.level.world.biome.biomes.coastal;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.DefaultFeatures;
+import com.sereneoasis.level.world.biome.biomefeatures.Feature;
+import com.sereneoasis.level.world.biome.biomefeatures.FeatureBiome;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 
@@ -9,7 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class StonyShore extends BiomeRepresentation {
+public class StonyShore extends BiomeRepresentation implements FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, Arrays.asList(Material.STONE, Material.GRAVEL));
@@ -19,5 +22,14 @@ public class StonyShore extends BiomeRepresentation {
     }};
     public StonyShore() {
         super(org.bukkit.block.Biome.STONY_SHORE, "Stony Shore", layers, -0.1, -0.3, 0, BiomeCategories.COASTAL);
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.ROCK.get(), 0.2);
+        feature.put(DefaultFeatures.GRAVEL_CLUMP.get(), 0.2);
+        feature.put(DefaultFeatures.COAL_ORE_CLUMP.get(), 0.1);
+        return feature;
     }
 }

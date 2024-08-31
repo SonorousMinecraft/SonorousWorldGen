@@ -43,7 +43,8 @@ public class Savanna extends BiomeRepresentation implements TreeBiome, FloraBiom
     @Override
     public HashMap<Feature, Double> getFeatures() {
         HashMap<Feature, Double>feature = new HashMap<>();
-        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
+        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.1);
+        feature.put(DefaultFeatures.LAMP.get(), 0.2);
         return feature;
     }
 }

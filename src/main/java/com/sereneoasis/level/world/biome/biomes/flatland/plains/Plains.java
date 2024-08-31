@@ -37,7 +37,11 @@ public class Plains extends BiomeRepresentation implements TreeBiome, FloraBiome
     @Override
     public HashMap<Feature, Double> getFeatures() {
         HashMap<Feature, Double>feature = new HashMap<>();
-        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.2);
+        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.01);
+        feature.put(DefaultFeatures.COAL_ORE_CLUMP.get(), 0.02);
+        feature.put(DefaultFeatures.ROCK.get(), 0.05);
+        feature.put(DefaultFeatures.LAMP.get(), 0.2);
+
         return feature;
     }
 }

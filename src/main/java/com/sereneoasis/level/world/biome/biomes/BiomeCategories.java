@@ -9,6 +9,7 @@ public enum BiomeCategories {
     HIGH,
     OFF,
     WET,
+    RIVER,
     WOOD,
 
     COASTAL

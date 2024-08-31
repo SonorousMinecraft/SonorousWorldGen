@@ -18,22 +18,22 @@ public class NoiseMaster {
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.01f, NoiseCategories.TERRAIN).
                     attachFractal(FastNoiseLite.FractalType.FBm, 4, 1.3f, 0.3f, -0.5f);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0002f, NoiseCategories.CONTINENTALNESS).
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0001f, NoiseCategories.CONTINENTALNESS).
                     attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0, 0);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.TEMPERATURE).
-                    attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0002f, NoiseCategories.TEMPERATURE).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 3, 0.5f, 0.3f, 3f);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.HUMIDITY).
-                    attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0002f, NoiseCategories.HUMIDITY).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 3, 0.5f, 0.3f, 3f);
 
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.01f, NoiseCategories.DETAIl).
                     attachFractal(FastNoiseLite.FractalType.FBm, 1, 0, 0, 0);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.WEIRDNESS).
-                    attachFractal(FastNoiseLite.FractalType.FBm, 1, 0, 0, 0);
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0001f, NoiseCategories.WEIRDNESS).
+                    attachFractal(FastNoiseLite.FractalType.FBm, 3, 0.5f, 0.3f, 3.0f);
 
-         new GenerationNoise(FastNoiseLite.NoiseType.Perlin, 0.001f, NoiseCategories.WETLAND).
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001f, NoiseCategories.RIVER).
                 attachFractal(FastNoiseLite.FractalType.PingPong, 3, 10, 0.5f, 0).
                  attachPingPong(1.0f);
 
@@ -68,35 +68,24 @@ public class NoiseMaster {
 
     }
 
-
-    /***
-     * Calculates which biome representation represents a specified location
-     * @param x the X of the Location we want to obtain the biome representation for
-     * @param z the Z of the Location we want to obtain the biome representation for
-     * @param ocean whether under the sea level
-     * @return A best fitting biome representation
-     */
-    private static BiomeRepresentation getBiomeRepresentation(int x, int z, boolean ocean){
-        double targetContinentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
-        double targetTemeprature = GenerationNoise.getNoise(NoiseCategories.TEMPERATURE, x, z) ;
-        double targetHumidity = GenerationNoise.getNoise(NoiseCategories.HUMIDITY, x, z) ;
-        double weirdness = GenerationNoise.getNoise(NoiseCategories.WEIRDNESS, x ,z) ;
-
+    public static BiomeCategories getCategory(int x, int z, boolean ocean){
         BiomeCategories category = null;
+        double targetContinentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
 
 
-        if (GenerationNoise.getNoise(NoiseCategories.WETLAND, x ,z ) > 0.95 && targetContinentalness >= -0.1 && targetContinentalness < 0.4 ) {
-            category = BiomeCategories.WET;
+        if (GenerationNoise.getNoise(NoiseCategories.RIVER, x ,z ) > 0.95 && targetContinentalness >= -0.1 && targetContinentalness < 0.3 ) {
+            category = BiomeCategories.RIVER;
         } else {
 
             if (targetContinentalness <= -0.2 && ocean) { // offland
                 category = BiomeCategories.OFF;
             } else if (targetContinentalness <= -0.1) { // coastal
                 category = BiomeCategories.COASTAL;
-            } else if (targetContinentalness > -0.1 && targetContinentalness <= 0.2) { // flatland
+            } else if (targetContinentalness > -0.1 && targetContinentalness <= 0.15) { // flatland
                 category = BiomeCategories.FLAT;
-
-            } else if (targetContinentalness > 0.2 && targetContinentalness <= 0.35) { // woodland
+            } else if (targetContinentalness > 0.15 && targetContinentalness <= 0.25) { // wet
+                category = BiomeCategories.WET;
+            } else if (targetContinentalness > 0.25 && targetContinentalness <= 0.35) { // woodland
                 category = BiomeCategories.WOOD;
 
             } else if (targetContinentalness > 0.35 && targetContinentalness <= 0.5) { // aridland
@@ -107,16 +96,33 @@ public class NoiseMaster {
 
             }
         }
+        return category;
+
+    }
+
+    /***
+     * Calculates which biome representation represents a specified location
+     * @param x the X of the Location we want to obtain the biome representation for
+     * @param z the Z of the Location we want to obtain the biome representation for
+     * @param ocean whether under the sea level
+     * @return A best fitting biome representation
+     */
+    private static BiomeRepresentation getBiomeRepresentation(int x, int z, boolean ocean){
+        double targetTemeprature = GenerationNoise.getNoise(NoiseCategories.TEMPERATURE, x, z) ;
+        double targetHumidity = GenerationNoise.getNoise(NoiseCategories.HUMIDITY, x, z) ;
+        double weirdness = GenerationNoise.getNoise(NoiseCategories.WEIRDNESS, x ,z) ;
+
+
         // Below uses an algorithm to select which Biome out of the already chosen category is most appropriate.
         // There is a score given based on the difference between ideal characteristics which is meant to be minimised.
         // Weirdness is also taken into account to minimise the amount of more unusual biomes
-        return BiomeRepresentation.getBiomeRepresentations(category)
+        return BiomeRepresentation.getBiomeRepresentations(getCategory(x, z, ocean))
                 .stream()
                 .map(biomeRepresentation -> {
-                    return Pair.of(biomeRepresentation, (Math.abs(biomeRepresentation.getContinentalness() - targetContinentalness) )
-                            + (Math.abs(biomeRepresentation.getHumidity() - targetHumidity) )
+                    return Pair.of(biomeRepresentation,
+                             (Math.abs(biomeRepresentation.getHumidity() - targetHumidity) )
                             + (Math.abs(biomeRepresentation.getTemperature() - targetTemeprature) )
-                            + (Math.abs(weirdness * (biomeRepresentation.getWeirdness() +  weirdness) )));
+                            + (Math.abs(weirdness * (biomeRepresentation.getWeirdness() -  weirdness) )));
                 })
                 .reduce((biomeRepresentationDoublePair, biomeRepresentationDoublePair2) -> {
                     if (biomeRepresentationDoublePair.getSecond() < biomeRepresentationDoublePair2.getSecond()) {

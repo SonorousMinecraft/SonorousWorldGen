@@ -2,6 +2,7 @@ package com.sereneoasis.level.world.noise;
 
 import com.sereneoasis.libs.FastNoiseLite;
 
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /***
@@ -64,7 +65,7 @@ public class GenerationNoise {
         noise = new FastNoiseLite();
         noise.SetNoiseType(noiseType);
         noise.SetFrequency(frequency);
-
+        noise.SetSeed(new Random().nextInt(1,10000));
         NOISE_TYPE_FUNCTION_MAP.put(noiseCategories, noise);
     }
 

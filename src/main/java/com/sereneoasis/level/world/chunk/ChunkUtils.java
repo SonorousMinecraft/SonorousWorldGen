@@ -1,7 +1,9 @@
 package com.sereneoasis.level.world.chunk;
 
+import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseCategories;
+import com.sereneoasis.level.world.noise.NoiseMaster;
 
 public class ChunkUtils {
 
@@ -14,7 +16,12 @@ public class ChunkUtils {
     public static final int DETAIL_DEVIATION = 3;
 
     public static float getCurrentY(int x, int z){
-        float continentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x ,z);
+
+        float continentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
+
+        if (NoiseMaster.getCategory(x, z, true).equals(BiomeCategories.RIVER)  ) {
+            return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION);
+        }
         float detail = GenerationNoise.getNoise(NoiseCategories.DETAIl, x ,z);
         float terrain = GenerationNoise.getNoise(NoiseCategories.TERRAIN, x ,z);
 
