@@ -1,9 +1,11 @@
 package com.sereneoasis.level.world.chunk;
 
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseCategories;
 import com.sereneoasis.level.world.noise.NoiseMaster;
+import org.bukkit.Chunk;
 
 public class ChunkUtils {
 
@@ -19,11 +21,23 @@ public class ChunkUtils {
 
         float continentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
 
-        if (NoiseMaster.getCategory(x, z, true).equals(BiomeCategories.RIVER)  ) {
+
+        float terrain = GenerationNoise.getNoise(NoiseCategories.TERRAIN, x ,z);
+
+        if (NoiseMaster.getCategory(x, z, true).equals(BiomeCategories.OFF)) {
+            return ChunkUtils.SEA_LEVEL;
+        }
+
+
+        if (KingdomUtils.isInsideKingdom(x, z)){
             return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION);
         }
-        float detail = GenerationNoise.getNoise(NoiseCategories.DETAIl, x ,z);
-        float terrain = GenerationNoise.getNoise(NoiseCategories.TERRAIN, x ,z);
+
+
+        if (NoiseMaster.getCategory(x, z, true).equals(BiomeCategories.RIVER)  ) {
+            return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION) +  (terrain*TERRAIN_DEVIATION);
+        }
+
 
         if (terrain > 0.9){
             terrain = (float) Math.pow(8, (terrain-0.9));
@@ -32,6 +46,8 @@ public class ChunkUtils {
         if (continentalness > 0.8){
             continentalness = (float) Math.pow(4, (continentalness)) - 2.23143313302f;
         }
+
+        float detail = GenerationNoise.getNoise(NoiseCategories.DETAIl, x ,z);
         float currentY = AVERAGE_HEIGHT +
                 (continentalness * CONTINENTALNESS_DEVIATION) +
                 (terrain*TERRAIN_DEVIATION) +

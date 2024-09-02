@@ -1,10 +1,13 @@
 package com.sereneoasis.level.world.chunk;
 
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.CustomBiomeProvider;
 import com.sereneoasis.level.world.chunk.populator.FeaturePopulator;
 import com.sereneoasis.level.world.chunk.populator.FloraPopulator;
 import com.sereneoasis.level.world.chunk.populator.TreePopulator;
+import com.sereneoasis.level.world.noise.GenerationNoise;
+import com.sereneoasis.level.world.noise.NoiseCategories;
 import com.sereneoasis.level.world.noise.NoiseMaster;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -38,15 +41,18 @@ public class CustomChunkGenerator extends ChunkGenerator {
 
                     for(int y = chunkData.getMinHeight(); y < ChunkUtils.Y_LIMIT && y < chunkData.getMaxHeight(); y++) {
 
-                    if(y < currentY) {
-                        float distanceToSurface = Math.abs(y - currentY); // The absolute y distance to the world surface.
+                        if(y < currentY) {
+                            float distanceToSurface = Math.abs(y - currentY); // The absolute y distance to the world surface.
 
-                        // It is not the closest block to the surface but still very close.
-                        if(distanceToSurface < ChunkUtils.LAYER_1_HEIGHT) {
-                            chunkData.setBlock(x, y, z, layers.get(BiomeLayers.PRIMARY).get(random.nextInt(layers.get(BiomeLayers.PRIMARY).size())));
+                            // It is not the closest block to the surface but still very close.
+                            if(distanceToSurface < ChunkUtils.LAYER_1_HEIGHT) {
+                                chunkData.setBlock(x, y, z, layers.get(BiomeLayers.PRIMARY).get(random.nextInt(layers.get(BiomeLayers.PRIMARY).size())));
+                            }
+                        } else if (y-currentY < KingdomUtils.WALL_HEIGHT && KingdomUtils.isKingdomWalls(chunkX * 16 + x, chunkZ * 16 + z)){
+                            chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
+
                         }
                     }
-                }
             }
         }
     }
@@ -55,68 +61,36 @@ public class CustomChunkGenerator extends ChunkGenerator {
     public void generateSurface(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
 
             for(int x = 0; x < 16; x++) {
-                for(int z = 0; z < 16; z++) {
+                for (int z = 0; z < 16; z++) {
                     float currentY = ChunkUtils.getCurrentY(x, chunkX, z, chunkZ);
 
                     boolean ocean = currentY <= ChunkUtils.SEA_LEVEL;
-                    HashMap<BiomeLayers, List<Material>>layers = NoiseMaster.getBiomeLayers(chunkX * 16 + x, chunkZ * 16 + z, ocean);
+                    HashMap<BiomeLayers, List<Material>> layers = NoiseMaster.getBiomeLayers(chunkX * 16 + x, chunkZ * 16 + z, ocean);
 
-                    for(int y = chunkData.getMinHeight(); y < ChunkUtils.Y_LIMIT && y < chunkData.getMaxHeight(); y++) {
-                    if(y < 1) {
-                        chunkData.setBlock(x, y, z, layers.get(BiomeLayers.BASE).get(random.nextInt(layers.get(BiomeLayers.BASE).size())));
-                    }
-                    else if(y < currentY) {
-                        float distanceToSurface = Math.abs(y - currentY); // The absolute y distance to the world surface.
+                    for (int y = chunkData.getMinHeight(); y < ChunkUtils.Y_LIMIT && y < chunkData.getMaxHeight(); y++) {
+                        if (y < currentY) {
+                            float distanceToSurface = Math.abs(y - currentY); // The absolute y distance to the world surface.
 
-                        // Set grass if the block closest to the surface.
-                        if(distanceToSurface < 1 && y > ChunkUtils.SEA_LEVEL) {
+                            // Set grass if the block closest to the surface.
+                            if (distanceToSurface < 1 && y > ChunkUtils.SEA_LEVEL) {
 
-//                            if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7) {
-//                                if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, chunkX * 16 + x, chunkZ * 16 + z) > 0.5) {
-//                                    chunkData.setBlock(x, y, z, Material.COBBLESTONE);
-//                                } else {
-//                                    chunkData.setBlock(x, y, z, Material.SMOOTH_STONE);
-//                                }
-//                            }
-////                            } else if (GenerationNoise.getNoise(NoiseCategories.ROADS, chunkX * 16 + x, chunkZ * 16 + z) > 0.8){
-////                                chunkData.setBlock(x, y, z, Material.COARSE_DIRT);
-////                            }
-//                            else {
-                                chunkData.setBlock(x, y, z, layers.get(BiomeLayers.SURFACE).get(random.nextInt(layers.get(BiomeLayers.SURFACE).size())));
-//                            }
+
+                                if (KingdomUtils.isInsideKingdom(chunkX * 16 + x, chunkZ * 16 + z)) {
+                                    if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, chunkX * 16 + x, chunkZ * 16 + z) > 0.75){
+                                        chunkData.setBlock(x, y, z, Material.WHITE_CONCRETE);
+
+                                    } else {
+                                        chunkData.setBlock(x, y, z, Material.COBBLESTONE);
+
+                                    }
+                                } else {
+                                    chunkData.setBlock(x, y, z, layers.get(BiomeLayers.SURFACE).get(random.nextInt(layers.get(BiomeLayers.SURFACE).size())));
+                                }
+                            }
                         }
                     }
-                    else if(y <= ChunkUtils.SEA_LEVEL) {
-                        chunkData.setBlock(x, y, z, Material.WATER);
-                    }
-                    //GenerationNoise.getNoise(NoiseCategories.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7
-//                    else if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_BORDERS, chunkX * 16 + x, chunkZ * 16 + z) > 0.7 && GenerationNoise.getNoise(NoiseCategories.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) > 0.6 ){
-//
-//                        // for walls
-//                        if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_WALLS, chunkX * 16 + x, chunkZ * 16 + z) < 0.7) {
-//
-//                                if ((Y_LIMIT - y > 30)){
-//                                    chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
-//                                }
-//                        }
-//                        else {
-//
-//
-//                            if (Y_LIMIT - y > 50) {
-//                                chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
-//                            }
-//                        }
-//
-//                        if (GenerationNoise.getNoise(NoiseCategories.ROADS,chunkX * 16 + x, chunkZ * 16 + z ) > 0.8) {
-//                            if (y-currentY < 20 && y > currentY){
-//                                chunkData.setBlock(x, y, z, Material.AIR);
-//
-//                            }
-//                        }
-//                    }
                 }
             }
-        }
     }
 
     @Nullable
@@ -196,6 +170,7 @@ public class CustomChunkGenerator extends ChunkGenerator {
     public boolean shouldGenerateMobs() {
         return false;
     }
+
 }
 
 

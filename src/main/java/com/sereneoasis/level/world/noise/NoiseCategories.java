@@ -24,7 +24,6 @@ public enum NoiseCategories {
     KINGDOM_WALLS,
     KINGDOM_BORDERS,
 
-    KINGDOM_BUILDINGS,
     KINGDOM_PATHS,
 
     ROADS;

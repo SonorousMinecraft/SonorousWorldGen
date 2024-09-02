@@ -1,6 +1,7 @@
 package com.sereneoasis.level.world.noise;
 
 import com.mojang.datafixers.util.Pair;
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
@@ -46,8 +47,8 @@ public class NoiseMaster {
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2,0.02F, NoiseCategories.CUSTOM_TREES).
                     attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_WALLS ).
-                    attachFractal(FastNoiseLite.FractalType.Ridged, 3, 0f, 0, 0).
+            new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.001f, NoiseCategories.KINGDOM_WALLS ).
+//                    attachFractal(FastNoiseLite.FractalType.Ridged, 3, 0f, 0, 0).
                     attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
 
         new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_BORDERS ).
@@ -55,12 +56,8 @@ public class NoiseMaster {
                 attachCellular(1.3f, FastNoiseLite.CellularReturnType.CellValue);
 
 
-        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_BUILDINGS ).
-                attachFractal(FastNoiseLite.FractalType.Ridged, 2, 1.0f, 25f, 40f).
-                attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
-
-        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_PATHS ).
-                attachFractal(FastNoiseLite.FractalType.Ridged, 2, -0.1f, 25f, 40f).
+        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.01f, NoiseCategories.KINGDOM_PATHS ).
+                attachFractal(FastNoiseLite.FractalType.Ridged, 1, 0, 0, 0).
                 attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
 
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.002f, NoiseCategories.ROADS).
@@ -73,7 +70,7 @@ public class NoiseMaster {
         double targetContinentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
 
 
-        if (GenerationNoise.getNoise(NoiseCategories.RIVER, x ,z ) > 0.95 && targetContinentalness >= -0.1 && targetContinentalness < 0.3 ) {
+        if (!KingdomUtils.isInsideKingdom(x, z) && GenerationNoise.getNoise(NoiseCategories.RIVER, x ,z ) > 0.95 && targetContinentalness >= -0.1 && targetContinentalness < 0.3 ) {
             category = BiomeCategories.RIVER;
         } else {
 
