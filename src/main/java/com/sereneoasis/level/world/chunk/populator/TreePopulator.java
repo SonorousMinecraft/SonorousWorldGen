@@ -1,5 +1,6 @@
 package com.sereneoasis.level.world.chunk.populator;
 
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -26,7 +27,7 @@ public class TreePopulator extends BlockPopulator {
         Location location = new Location(Bukkit.getWorld(worldInfo.getUID()), x, y, z);
 
         Biome biome = limitedRegion.getBiome(location);
-        if (BiomeRepresentation.isTreeBiome(biome)){
+        if (BiomeRepresentation.isTreeBiome(biome) && !KingdomUtils.isInsideKingdom(chunkX*16, chunkZ*16)){
 
             if (PopulatorUtils.isSurface(biome, limitedRegion.getType(x,y,z))) {
                 limitedRegion.setType(location, Material.AIR);

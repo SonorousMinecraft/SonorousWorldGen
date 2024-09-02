@@ -48,7 +48,8 @@ public class CustomChunkGenerator extends ChunkGenerator {
                             if(distanceToSurface < ChunkUtils.LAYER_1_HEIGHT) {
                                 chunkData.setBlock(x, y, z, layers.get(BiomeLayers.PRIMARY).get(random.nextInt(layers.get(BiomeLayers.PRIMARY).size())));
                             }
-                        } else if (y-currentY < KingdomUtils.WALL_HEIGHT && KingdomUtils.isKingdomWalls(chunkX * 16 + x, chunkZ * 16 + z)){
+                        }
+                        else if (y-currentY<40 && KingdomUtils.isKingdomWalls(chunkX * 16 + x, chunkZ * 16 + z)){
                             chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
 
                         }
@@ -77,10 +78,10 @@ public class CustomChunkGenerator extends ChunkGenerator {
 
                                 if (KingdomUtils.isInsideKingdom(chunkX * 16 + x, chunkZ * 16 + z)) {
                                     if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, chunkX * 16 + x, chunkZ * 16 + z) > 0.75){
-                                        chunkData.setBlock(x, y, z, Material.WHITE_CONCRETE);
+                                        chunkData.setBlock(x, y, z, Material.COBBLESTONE);
 
                                     } else {
-                                        chunkData.setBlock(x, y, z, Material.COBBLESTONE);
+                                        chunkData.setBlock(x, y, z, Material.GRASS_BLOCK);
 
                                     }
                                 } else {

@@ -4,14 +4,11 @@ import com.sereneoasis.SereneWorldGen;
 import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.Schematics;
 import com.sereneoasis.level.world.chunk.ChunkUtils;
-import com.sereneoasis.level.world.chunk.populator.PopulatorUtils;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseCategories;
-import com.sereneoasis.level.world.noise.NoiseMaster;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
 import com.sereneoasis.npc.random.types.BasicNPC;
 import com.sereneoasis.utils.NPCUtils;
-import com.sereneoasis.utils.StructureUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -85,14 +82,43 @@ public class SereneListener implements Listener {
             new Pair<>("MedievalRiverHouse", 1),
             new Pair<>("MedievalFeastingHall",1)};
 
-    private void pasteSchematic(Location loc, Pair[] pairArray){
+    private void pasteSchematic(Location loc, Pair[] pairArray, Chunk chunk){
         Random rand = new Random();
         Pair<String, Integer> pair = pairArray[rand.nextInt(pairArray.length) ];
 
-        Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
+        pasteWhenLoaded(pair, loc, chunk);
+    }
 
-            Schematics.pasteClipboard(pair.getA(), loc.clone().subtract(0, pair.getB(), 0));
+    private void pasteWhenLoaded(Pair<String, Integer> pair, Location loc, Chunk chunk){
+        Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
+            
+            if (!chunk.getLoadLevel().equals(Chunk.LoadLevel.TICKING)) {
+                pasteWhenLoaded(pair, loc, chunk);
+            } else {
+                Schematics.pasteClipboard(pair.getA(), loc.clone().subtract(0, pair.getB(), 0));
+            }
         }, 100L);
+    }
+    
+    private static Set<Chunk> populatedChunks = new HashSet<>();
+    
+    private void cacheSquare(World world, int length, int x, int z){
+        for (int newX = 0; newX<length; newX ++) {
+            for (int newZ = 0; newZ < length; newZ++) {
+                populatedChunks.add(world.getChunkAt(x + newX, z + newZ));
+            }
+        }
+    }
+
+    private boolean isPopulated(World world, int length, int x, int z){
+        for (int newX = 0; newX<length; newX ++) {
+            for (int newZ = 0; newZ < length; newZ++) {
+                if (populatedChunks.contains(world.getChunkAt(x + newX, z + newZ))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void genKingdom(Chunk chunk, ChunkLoadEvent event){
@@ -101,24 +127,34 @@ public class SereneListener implements Listener {
 
         int z = chunk.getZ() * 16;
 
-        Location loc = new Location(event.getWorld(), x, ChunkUtils.getCurrentY(x, z), z);
+        Location loc = new Location(event.getWorld(), x, ChunkUtils.getCurrentY(x, z) +1, z);
 //        loc.setYaw(90 * random.nextInt(0, 4));
 
 
 
         if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x ,z) < 0 ) {
-
+                World world = event.getWorld();
                 if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+48 ,z+48) < 0 ) {
-                    pasteSchematic(loc, largeHouses);
+                    if (!isPopulated(world, 3, x, z)) {
+                        cacheSquare(world, 3, x, z);
+                        pasteSchematic(loc, largeHouses, chunk);
+                    }
                 }
                 else {
-
                     if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+32 ,z+32) < 0 ) {
-                        pasteSchematic(loc, mediumHouses);
+                        if (!isPopulated(world, 2, x, z)) {
+
+                            cacheSquare(world, 2, x, z);
+
+                            pasteSchematic(loc, mediumHouses, chunk);
+                        }
                     } else {
 
                         if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+16 ,z+16) < 0 ) {
-                            pasteSchematic(loc, smallHouses);
+                            if (!isPopulated(world, 1, x, z)) {
+                                cacheSquare(world, 1, x, z);
+                                pasteSchematic(loc, smallHouses, chunk);
+                            }
                         }
                     }
                 }

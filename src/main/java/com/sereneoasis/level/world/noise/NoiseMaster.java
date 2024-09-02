@@ -47,16 +47,13 @@ public class NoiseMaster {
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2,0.02F, NoiseCategories.CUSTOM_TREES).
                     attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.001f, NoiseCategories.KINGDOM_WALLS ).
-//                    attachFractal(FastNoiseLite.FractalType.Ridged, 3, 0f, 0, 0).
-                    attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
 
-        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.002f, NoiseCategories.KINGDOM_BORDERS ).
+        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.001f, NoiseCategories.KINGDOM_BORDERS ).
                 attachFractal(FastNoiseLite.FractalType.Ridged, 3, 0f, 0, 0).
                 attachCellular(1.3f, FastNoiseLite.CellularReturnType.CellValue);
 
 
-        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.01f, NoiseCategories.KINGDOM_PATHS ).
+        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.02f, NoiseCategories.KINGDOM_PATHS ).
                 attachFractal(FastNoiseLite.FractalType.Ridged, 1, 0, 0, 0).
                 attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
 

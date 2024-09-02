@@ -92,7 +92,7 @@ public class GenerationNoise {
     }
 
     public GenerationNoise attachCellular(float jitter, FastNoiseLite.CellularReturnType cellularReturnType){
-        noise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.Manhattan);
+        noise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.Hybrid);
         noise.SetCellularReturnType(cellularReturnType);
         noise.SetCellularJitter(jitter);
         return this;

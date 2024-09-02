@@ -1,5 +1,6 @@
 package com.sereneoasis.level.world.chunk.populator;
 
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import com.sereneoasis.level.world.noise.NoiseMaster;
 import org.bukkit.Material;
@@ -19,7 +20,7 @@ public class FloraPopulator extends BlockPopulator {
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
         Biome biome = limitedRegion.getBiome(chunkX * 16,0,chunkZ * 16);
-        if (BiomeRepresentation.isFloraBiome(biome)) {
+        if (BiomeRepresentation.isFloraBiome(biome) && !KingdomUtils.isInsideKingdom(chunkX*16, chunkZ*16)) {
             BiomeRepresentation.getFloraTypes(biome).forEach((material, integer) -> {
                 for (int iteration = 0; iteration < integer; iteration++) {
                     int x = random.nextInt(16) + chunkX * 16;

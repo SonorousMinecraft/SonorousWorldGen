@@ -15,7 +15,7 @@ public class KingdomUtils {
     }
 
     public static boolean isKingdomWalls(int x, int z){
-        return GenerationNoise.getNoise(NoiseCategories.KINGDOM_WALLS, x,  z) > 0.7;
+        return isInsideKingdom(x,z)&& !(isInsideKingdom(x-1, z) && isInsideKingdom(x, z-1) && isInsideKingdom(x+1, z) && isInsideKingdom(x, z+1));
     }
 
 }

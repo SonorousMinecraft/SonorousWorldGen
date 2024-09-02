@@ -1,5 +1,6 @@
 package com.sereneoasis.level.world.chunk.populator;
 
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,7 +21,7 @@ public class FeaturePopulator extends BlockPopulator {
     @Override
     public void populate(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull LimitedRegion limitedRegion) {
         Biome biome = limitedRegion.getBiome(chunkX * 16,0,chunkZ * 16);
-        if (BiomeRepresentation.isFeatureBiome(biome)) {
+        if (BiomeRepresentation.isFeatureBiome(biome) && !KingdomUtils.isInsideKingdom(chunkX*16, chunkZ*16)) {
             BiomeRepresentation.getBiomeFeatures(biome).forEach((feature, aDouble) -> {
                 if (aDouble > random.nextDouble()){
                     int x = random.nextInt(2, 15) + chunkX * 16;
