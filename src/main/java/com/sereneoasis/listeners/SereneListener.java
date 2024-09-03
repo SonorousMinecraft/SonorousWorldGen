@@ -3,10 +3,13 @@ package com.sereneoasis.listeners;
 import com.sereneoasis.SereneWorldGen;
 import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.Schematics;
+import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import com.sereneoasis.level.world.chunk.ChunkUtils;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseCategories;
+import com.sereneoasis.level.world.noise.NoiseMaster;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
+import com.sereneoasis.loader.ChunkLoader;
 import com.sereneoasis.npc.random.types.BasicNPC;
 import com.sereneoasis.utils.NPCUtils;
 import org.bukkit.Bukkit;
@@ -20,6 +23,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.WorldLoadEvent;
 import oshi.util.tuples.Pair;
 
 import java.util.*;
@@ -86,18 +90,27 @@ public class SereneListener implements Listener {
         Random rand = new Random();
         Pair<String, Integer> pair = pairArray[rand.nextInt(pairArray.length) ];
 
-        pasteWhenLoaded(pair, loc, chunk);
+        loadToPaste(pair, loc, chunk);
     }
 
-    private void pasteWhenLoaded(Pair<String, Integer> pair, Location loc, Chunk chunk){
-        Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
-            
-            if (!chunk.getLoadLevel().equals(Chunk.LoadLevel.TICKING)) {
-                pasteWhenLoaded(pair, loc, chunk);
-            } else {
-                Schematics.pasteClipboard(pair.getA(), loc.clone().subtract(0, pair.getB(), 0));
-            }
-        }, 100L);
+    public interface PasteCommand {
+
+        void paste();
+    }
+
+    public static final HashMap<Chunk, PasteCommand>pendingSchematics = new HashMap<>();
+
+    private void loadToPaste(Pair<String, Integer> pair, Location loc, Chunk chunk){
+//        Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
+//
+//            if (!chunk.getLoadLevel().equals(Chunk.LoadLevel.TICKING)) {
+//                pasteWhenLoaded(pair, loc, chunk);
+//            } else {
+//                Schematics.pasteClipboard(pair.getA(), loc.clone().subtract(0, pair.getB(), 0));
+//            }
+//        }, 100L);
+//        pendingSchematics.put(pair.getA(), loc.clone().subtract(0, pair.getB(), 0));
+        pendingSchematics.put(chunk, () -> Schematics.pasteClipboard(pair.getA(), loc.clone().subtract(0, pair.getB(), 0)));
     }
     
     private static Set<Chunk> populatedChunks = new HashSet<>();
@@ -113,7 +126,9 @@ public class SereneListener implements Listener {
     private boolean isPopulated(World world, int length, int x, int z){
         for (int newX = 0; newX<length; newX ++) {
             for (int newZ = 0; newZ < length; newZ++) {
-                if (populatedChunks.contains(world.getChunkAt(x + newX, z + newZ))){
+                int chunkX = x + newX;
+                int chunkZ = z + newZ;
+                if (populatedChunks.stream().anyMatch(chunk -> (chunk.getX() == chunkX ) && (chunk.getZ() == chunkZ ) )){
                     return true;
                 }
             }
@@ -167,13 +182,14 @@ public class SereneListener implements Listener {
         if (!event.isNewChunk()) {
             return;
         }
-        Chunk chunk = event.getChunk();
 
+
+        Chunk chunk = event.getChunk();
+        chunk.addPluginChunkTicket(SereneWorldGen.plugin);
 
         genTrees(chunk, event);
 
         if (KingdomUtils.isInsideKingdom(chunk.getX() * 16, chunk.getZ() * 16)){
-            Bukkit.broadcastMessage(String.valueOf(chunk.getX()));
             genKingdom(chunk, event);
         }
 
@@ -194,6 +210,15 @@ public class SereneListener implements Listener {
 
 
     }
+
+
+//    @EventHandler
+//    public void onWorldLoad(WorldLoadEvent event){
+//        if (event.getWorld().getName().equals("test")) {
+//            World world = event.getWorld();
+//            SereneWorldGen.chunkLoader = new ChunkLoader(world);
+//        }
+//    }
 
     private static final ConcurrentHashMap<Chunk, BasicNPC > npcs = new ConcurrentHashMap<>();
 

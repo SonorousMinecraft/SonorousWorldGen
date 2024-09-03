@@ -9,8 +9,8 @@ public class KingdomUtils {
 
     public static boolean isInsideKingdom(int x, int z){
         double targetContinentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
-//        return true;
-        return (GenerationNoise.getNoise(NoiseCategories.KINGDOM_BORDERS, x,  z) > 0.7) && targetContinentalness >= -0.1 && targetContinentalness < 0.5;
+        return false;
+//        return (GenerationNoise.getNoise(NoiseCategories.KINGDOM_BORDERS, x,  z) > 0.7) && targetContinentalness >= -0.1 && targetContinentalness < 0.5;
 //        return (GenerationNoise.getNoise(NoiseCategories.KINGDOM_BORDERS, x,  z) > 0.3);
     }
 

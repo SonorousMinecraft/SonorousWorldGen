@@ -53,7 +53,7 @@ public class NoiseMaster {
                 attachCellular(1.3f, FastNoiseLite.CellularReturnType.CellValue);
 
 
-        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.02f, NoiseCategories.KINGDOM_PATHS ).
+        new GenerationNoise(FastNoiseLite.NoiseType.Cellular, 0.025f, NoiseCategories.KINGDOM_PATHS ).
                 attachFractal(FastNoiseLite.FractalType.Ridged, 1, 0, 0, 0).
                 attachCellular(1.3f, FastNoiseLite.CellularReturnType.Distance2Div);
 
