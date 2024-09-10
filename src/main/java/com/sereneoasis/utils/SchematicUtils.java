@@ -1,6 +1,5 @@
 package com.sereneoasis.utils;
 
-import com.fastasyncworldedit.core.FaweAPI;
 import com.sereneoasis.SereneWorldGen;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -79,20 +78,20 @@ public class SchematicUtils {
      */
     public static void pasteClipboard(Clipboard clipboard, Location location) {
         World world = BukkitAdapter.adapt(location.getWorld());
-        FaweAPI.getTaskManager().async(() -> {
 
             try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
                 Operation operation = new ClipboardHolder(clipboard)
                         .createPaste(editSession)
                         .to(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
                         // configure here
+                        .copyEntities(false)
+                        .copyBiomes(false)
                         .build();
                 Operations.complete(operation);
 
         } catch (WorldEditException e) {
             throw new RuntimeException(e);
         }
-        });
 
     }
 }

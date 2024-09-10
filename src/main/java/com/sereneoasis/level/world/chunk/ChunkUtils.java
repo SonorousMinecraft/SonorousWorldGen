@@ -5,7 +5,6 @@ import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseCategories;
 import com.sereneoasis.level.world.noise.NoiseMaster;
-import org.bukkit.Chunk;
 
 public class ChunkUtils {
 
@@ -29,7 +28,7 @@ public class ChunkUtils {
         }
 
 
-        if (KingdomUtils.isInsideKingdom(x, z)){
+        if (KingdomUtils.isInsideKingdomInclWalls(x, z)){
             return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION);
         }
 

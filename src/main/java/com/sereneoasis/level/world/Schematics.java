@@ -25,6 +25,9 @@ public class Schematics {
         Arrays.stream(SereneWorldGen.getFileManager().getSchematics()).forEach(file -> {
             try {
                 stringClipboardHashMap.put(file.getName(), SchematicUtils.createClipboard(file));
+                if (SchematicUtils.createClipboard(file) == null){
+                    System.out.println("FUCK");
+                }
             } catch (IOException e) {
                 Bukkit.getServer().getLogger().log(Level.INFO, "Invalid schematic provided or mistake reading");
             }

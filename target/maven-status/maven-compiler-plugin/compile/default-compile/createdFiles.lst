@@ -72,7 +72,6 @@ com/sereneoasis/level/world/tree/TreeGenerationUtils.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/Ocean.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/ColdOcean.class
 com/sereneoasis/level/world/biome/biomes/flatland/plains/SnowyPlains$1.class
-com/sereneoasis/loader/ChunkLoader.class
 com/sereneoasis/level/world/noise/GenerationNoise.class
 com/sereneoasis/level/world/biome/biomes/highland/peaks/StonyPeaks.class
 com/sereneoasis/utils/PacketListenerImpl.class
@@ -86,7 +85,6 @@ com/sereneoasis/level/world/biome/biomes/aridland/savanna/Savanna$1.class
 com/sereneoasis/level/world/biome/biomes/woodland/taiga/OldGrowthSpruceTaiga$1.class
 com/sereneoasis/level/world/biome/biomes/woodland/jungle/SparseJungle.class
 com/sereneoasis/level/world/biome/biomes/woodland/taiga/OldGrowthSpruceTaiga.class
-com/sereneoasis/listeners/SereneListener$PasteCommand.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/DeepColdOcean$1.class
 com/sereneoasis/level/world/biome/biomes/highland/groves/Grove.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/DeepColdOcean.class
@@ -99,6 +97,7 @@ com/sereneoasis/level/world/biome/biomes/flatland/plains/SnowyPlains.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/DeepFrozenOcean.class
 com/sereneoasis/level/world/biome/biomes/river/River.class
 com/sereneoasis/level/world/biome/biomefeatures/FloraBiomeUtils.class
+com/sereneoasis/loader/ChunkHandler.class
 com/sereneoasis/level/world/biome/biomes/highland/hills/WindsweptHills.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/FrozenOcean$1.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/DeepOcean.class

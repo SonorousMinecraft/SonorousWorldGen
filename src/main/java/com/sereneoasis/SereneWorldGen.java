@@ -7,8 +7,6 @@ import com.sereneoasis.level.world.chunk.CustomChunkGenerator;
 import com.sereneoasis.level.world.noise.NoiseMaster;
 import com.sereneoasis.listeners.SereneListener;
 import com.sereneoasis.utils.NPCUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -51,8 +49,6 @@ public class SereneWorldGen extends JavaPlugin {
     public void onDisable() {
         getLogger().log(Level.INFO, "WorldGenerator was disabled successfully.");
     }
-
-//    public static ChunkLoader chunkLoader;
 
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {

@@ -1,18 +1,14 @@
 package com.sereneoasis.listeners;
 
-import com.sereneoasis.SereneWorldGen;
 import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.Schematics;
-import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import com.sereneoasis.level.world.chunk.ChunkUtils;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseCategories;
-import com.sereneoasis.level.world.noise.NoiseMaster;
 import com.sereneoasis.level.world.tree.TreeGenerationUtils;
-import com.sereneoasis.loader.ChunkLoader;
+import com.sereneoasis.loader.ChunkHandler;
 import com.sereneoasis.npc.random.types.BasicNPC;
 import com.sereneoasis.utils.NPCUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -49,7 +45,7 @@ public class SereneListener implements Listener {
         int x = snapshotX + chunk.getX() * 16;
         int z = snapshotZ + chunk.getZ() * 16;
 
-        if (random.nextDouble() < 0.002 && !KingdomUtils.isInsideKingdom(x, z)){
+        if (random.nextDouble() < 0.002 && !KingdomUtils.isInsideKingdomInclWalls(x, z)){
 
             while(event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {
                 y--;
@@ -67,160 +63,42 @@ public class SereneListener implements Listener {
         }
     }
 
-    Pair[] smallHouses = { new Pair<>("MedievalHouseSmall1",2) ,
-            new Pair<>("MedievalHouseSmall2", 1),
-                    new Pair<>("MedievalHouseSmall3", 1),
-            new Pair<>("MedievalHouseSmall4", 2),
-            new Pair<>("MedievalHouseSmall5",1),
-            new Pair<>("Bakery-House", 1)};
 
-    Pair[] mediumHouses =  { new Pair<>("MedievalHouseMedium1",2) ,
-            new Pair<>("MedievalHouseMedium2", 1),
-            new Pair<>("MedievalHouseMedium3", 1),
-            new Pair<>("MedievalHouseFavorite", 2)};
-
-
-    Pair[] largeHouses = { new Pair<>("MedievalHouseLarge1",2) ,
-            new Pair<>("MedievalHouseLarge2", 2),
-            new Pair<>("MedievalMainHouse", 2),
-            new Pair<>("MedievalRiverHouse", 1),
-            new Pair<>("MedievalFeastingHall",1)};
-
-    private void pasteSchematic(Location loc, Pair[] pairArray, Chunk chunk){
-        Random rand = new Random();
-        Pair<String, Integer> pair = pairArray[rand.nextInt(pairArray.length) ];
-
-        loadToPaste(pair, loc, chunk);
-    }
-
-    public interface PasteCommand {
-
-        void paste();
-    }
-
-    public static final HashMap<Chunk, PasteCommand>pendingSchematics = new HashMap<>();
-
-    private void loadToPaste(Pair<String, Integer> pair, Location loc, Chunk chunk){
-//        Bukkit.getScheduler().runTaskLater(SereneWorldGen.plugin, () -> {
-//
-//            if (!chunk.getLoadLevel().equals(Chunk.LoadLevel.TICKING)) {
-//                pasteWhenLoaded(pair, loc, chunk);
-//            } else {
-//                Schematics.pasteClipboard(pair.getA(), loc.clone().subtract(0, pair.getB(), 0));
-//            }
-//        }, 100L);
-//        pendingSchematics.put(pair.getA(), loc.clone().subtract(0, pair.getB(), 0));
-        pendingSchematics.put(chunk, () -> Schematics.pasteClipboard(pair.getA(), loc.clone().subtract(0, pair.getB(), 0)));
-    }
-    
-    private static Set<Chunk> populatedChunks = new HashSet<>();
-    
-    private void cacheSquare(World world, int length, int x, int z){
-        for (int newX = 0; newX<length; newX ++) {
-            for (int newZ = 0; newZ < length; newZ++) {
-                populatedChunks.add(world.getChunkAt(x + newX, z + newZ));
-            }
-        }
-    }
-
-    private boolean isPopulated(World world, int length, int x, int z){
-        for (int newX = 0; newX<length; newX ++) {
-            for (int newZ = 0; newZ < length; newZ++) {
-                int chunkX = x + newX;
-                int chunkZ = z + newZ;
-                if (populatedChunks.stream().anyMatch(chunk -> (chunk.getX() == chunkX ) && (chunk.getZ() == chunkZ ) )){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void genKingdom(Chunk chunk, ChunkLoadEvent event){
-
-        int x = chunk.getX() * 16;
-
-        int z = chunk.getZ() * 16;
-
-        Location loc = new Location(event.getWorld(), x, ChunkUtils.getCurrentY(x, z) +1, z);
-//        loc.setYaw(90 * random.nextInt(0, 4));
-
-
-
-        if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x ,z) < 0 ) {
-                World world = event.getWorld();
-                if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+48 ,z+48) < 0 ) {
-                    if (!isPopulated(world, 3, x, z)) {
-                        cacheSquare(world, 3, x, z);
-                        pasteSchematic(loc, largeHouses, chunk);
-                    }
-                }
-                else {
-                    if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+32 ,z+32) < 0 ) {
-                        if (!isPopulated(world, 2, x, z)) {
-
-                            cacheSquare(world, 2, x, z);
-
-                            pasteSchematic(loc, mediumHouses, chunk);
-                        }
-                    } else {
-
-                        if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+16 ,z+16) < 0 ) {
-                            if (!isPopulated(world, 1, x, z)) {
-                                cacheSquare(world, 1, x, z);
-                                pasteSchematic(loc, smallHouses, chunk);
-                            }
-                        }
-                    }
-                }
-        }
-    }
-
-    @EventHandler
-    public void onChunkLoad(ChunkLoadEvent event) {
-
-        if (!event.isNewChunk()) {
-            return;
-        }
-
-
-        Chunk chunk = event.getChunk();
-        chunk.addPluginChunkTicket(SereneWorldGen.plugin);
-
-        genTrees(chunk, event);
-
-        if (KingdomUtils.isInsideKingdom(chunk.getX() * 16, chunk.getZ() * 16)){
-            genKingdom(chunk, event);
-        }
-
-//            while (event.getChunk().getChunkSnapshot(false, false, false).getBlockType(snapshotX, y, snapshotZ).isAir() && y > -64) {
-//                    y--;
-//                    if (y == 0) {
-//                        return;
-//                    }
-//            }
-//            y+=1;
-//            int finalY = y;
-//
-//            Location loc = new Location(event.getWorld(), x, finalY, z);
-//            loc.setYaw(90 * random.nextInt(0, 4));
-//                StructureUtils.spawnStructure(loc, "village/plains/houses" + buildings.get(random.nextInt(buildings.size())));
-//                BasicNPC npc = NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
-//                npcs.put(chunk, npc);
-
-
-    }
 
 
 //    @EventHandler
-//    public void onWorldLoad(WorldLoadEvent event){
-//        if (event.getWorld().getName().equals("test")) {
-//            World world = event.getWorld();
-//            SereneWorldGen.chunkLoader = new ChunkLoader(world);
+//    public void onChunkLoad(ChunkLoadEvent event) {
+//
+//        if (!event.isNewChunk()) {
+//            return;
 //        }
+//
+//
+//        Chunk chunk = event.getChunk();
+//
+//        chunkHandler.insertNewChunk(chunk);
+////        genTrees(chunk, event);
+//
+//        if (KingdomUtils.isInsideKingdomExclWalls(chunk.getX() * 16, chunk.getZ() * 16)){
+//            genKingdom(chunk, event);
+//        }
+//
+////                BasicNPC npc = NPCUtils.spawnNPC(loc.clone(), Bukkit.getPlayer("Sakrajin"), "Villager");
+////                npcs.put(chunk, npc);
+//
+//
 //    }
 
-    private static final ConcurrentHashMap<Chunk, BasicNPC > npcs = new ConcurrentHashMap<>();
+    private static ChunkHandler chunkHandler;
+    @EventHandler
+    public void onWorldLoad(WorldLoadEvent event){
+        if (event.getWorld().getName().equals("test")) {
+            World world = event.getWorld();
+            chunkHandler = new ChunkHandler(world);
+        }
+    }
+
+    public static final ConcurrentHashMap<Chunk, BasicNPC > npcs = new ConcurrentHashMap<>();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
