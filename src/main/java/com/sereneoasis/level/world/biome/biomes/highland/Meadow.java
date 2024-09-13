@@ -33,6 +33,11 @@ public class Meadow extends BiomeRepresentation implements TreeBiome, FloraBiome
 
     @Override
     public HashMap<Material, Integer> getFlora() {
-        return FloraBiomeUtils.getFlowers(10);
+        HashMap<Material, Integer>flora = new HashMap<>();
+        flora.putAll(FloraBiomeUtils.getFlowers(1));
+        flora.put(Material.SHORT_GRASS, 10);
+        flora.put(Material.PINK_PETALS, 10);
+        flora.put(Material.ROSE_BUSH, 15);
+        return flora;
     }
 }

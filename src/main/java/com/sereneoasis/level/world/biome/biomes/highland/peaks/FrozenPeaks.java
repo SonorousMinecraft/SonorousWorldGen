@@ -2,6 +2,9 @@ package com.sereneoasis.level.world.biome.biomes.highland.peaks;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.DefaultFeatures;
+import com.sereneoasis.level.world.biome.biomefeatures.Feature;
+import com.sereneoasis.level.world.biome.biomefeatures.FeatureBiome;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 
@@ -9,7 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class FrozenPeaks extends BiomeRepresentation {
+public class FrozenPeaks extends BiomeRepresentation implements FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.BLUE_ICE));
@@ -19,6 +22,13 @@ public class FrozenPeaks extends BiomeRepresentation {
     }};
     public FrozenPeaks() {
         super(org.bukkit.block.Biome.FROZEN_PEAKS, "Frozen Peaks", layers, -1.0, 1.0, -0.2, 0.1, BiomeCategories.HIGH);
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.PACKED_ICE_SPIKE.get(), 0.1);
+        return feature;
     }
 }
 

@@ -2,9 +2,7 @@ package com.sereneoasis.level.world.biome.biomes.highland.groves;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
-import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
-import com.sereneoasis.level.world.biome.biomefeatures.FloraBiomeUtils;
-import com.sereneoasis.level.world.biome.biomefeatures.TreeBiome;
+import com.sereneoasis.level.world.biome.biomefeatures.*;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -13,7 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class CherryGrove extends BiomeRepresentation implements TreeBiome, FloraBiome {
+public class CherryGrove extends BiomeRepresentation implements TreeBiome, FloraBiome, FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.GRASS_BLOCK));
@@ -33,10 +31,17 @@ public class CherryGrove extends BiomeRepresentation implements TreeBiome, Flora
     @Override
     public HashMap<Material, Integer> getFlora() {
         HashMap<Material, Integer>flora = new HashMap<>();
-        flora.putAll(FloraBiomeUtils.getFlowers(10));
+        flora.putAll(FloraBiomeUtils.getFlowers(1));
         flora.put(Material.SHORT_GRASS, 10);
-        flora.put(Material.POPPY, 5);
+        flora.put(Material.POPPY, 20);
         flora.put(Material.PINK_PETALS, 30);
         return flora;
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.CRYSTALS.get(), 0.1);
+        return feature;
     }
 }

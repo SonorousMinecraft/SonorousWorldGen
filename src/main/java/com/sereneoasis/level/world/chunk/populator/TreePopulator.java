@@ -1,5 +1,6 @@
 package com.sereneoasis.level.world.chunk.populator;
 
+import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -26,11 +27,15 @@ public class TreePopulator extends BlockPopulator {
         Location location = new Location(Bukkit.getWorld(worldInfo.getUID()), x, y, z);
 
         Biome biome = limitedRegion.getBiome(location);
-        if (BiomeRepresentation.isTreeBiome(biome)){
-            limitedRegion.setType(location, Material.AIR);
-            limitedRegion.generateTree(location, random, BiomeRepresentation.getTreeTypes(biome).get(random.nextInt(BiomeRepresentation.getTreeTypes(biome).size())));
+        if (BiomeRepresentation.isTreeBiome(biome) && !KingdomUtils.isInsideKingdomInclWalls(chunkX*16, chunkZ*16)){
 
-//            if (GenerationNoise.getNoise(NoiseTypes.CUSTOM_TREES, chunkX * 16, chunkZ * 16) > 0.5 && (GenerationNoise.getNoise(NoiseTypes.CUSTOM_TREES, chunkX * 16, chunkZ * 16) < 0.55)){
+            if (PopulatorUtils.isSurface(biome, limitedRegion.getType(x,y,z))) {
+                limitedRegion.setType(location, Material.AIR);
+                limitedRegion.generateTree(location, random, BiomeRepresentation.getTreeTypes(biome).get(random.nextInt(BiomeRepresentation.getTreeTypes(biome).size())));
+            }
+
+
+//            if (GenerationNoise.getNoise(NoiseCategories.CUSTOM_TREES, chunkX * 16, chunkZ * 16) > 0.5 && (GenerationNoise.getNoise(NoiseCategories.CUSTOM_TREES, chunkX * 16, chunkZ * 16) < 0.55)){
 //                TreeGenerationUtils.generateCherryTree(location, 5, random);
 //            }
         }

@@ -2,6 +2,9 @@ package com.sereneoasis.level.world.biome.biomes.flatland.plains;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.DefaultFeatures;
+import com.sereneoasis.level.world.biome.biomefeatures.Feature;
+import com.sereneoasis.level.world.biome.biomefeatures.FeatureBiome;
 import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
@@ -10,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class SunflowerPlains extends BiomeRepresentation implements FloraBiome {
+public class SunflowerPlains extends BiomeRepresentation implements FloraBiome, FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.GRASS_BLOCK));
@@ -25,8 +28,21 @@ public class SunflowerPlains extends BiomeRepresentation implements FloraBiome {
     @Override
     public HashMap<Material, Integer> getFlora() {
         HashMap<Material, Integer>flora = new HashMap<>();
-        flora.put( Material.SUNFLOWER, 40);
+        flora.put(Material.SHORT_GRASS, 20);
+        flora.put(Material.DANDELION, 10);
+        flora.put(Material.ROSE_BUSH, 3);
+        flora.put( Material.SUNFLOWER, 20);
         return flora;
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.GOLD_ORE_CLUMP.get(), 0.01);
+        feature.put(DefaultFeatures.COAL_ORE_CLUMP.get(), 0.02);
+        feature.put(DefaultFeatures.ROCK.get(), 0.05);
+        feature.put(DefaultFeatures.LAMP.get(), 0.2);
+        return feature;
     }
 }
 

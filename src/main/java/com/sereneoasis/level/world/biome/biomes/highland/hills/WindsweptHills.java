@@ -2,6 +2,8 @@ package com.sereneoasis.level.world.biome.biomes.highland.hills;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
+import com.sereneoasis.level.world.biome.biomefeatures.FloraBiomeUtils;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 
@@ -9,7 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class WindsweptHills extends BiomeRepresentation {
+public class WindsweptHills extends BiomeRepresentation implements FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.GRASS_BLOCK));
@@ -19,6 +21,15 @@ public class WindsweptHills extends BiomeRepresentation {
     }};
     public WindsweptHills() {
         super(org.bukkit.block.Biome.WINDSWEPT_HILLS, "Windswept Hills", layers, -0.5, 0.6, -0.2, 0.5, BiomeCategories.HIGH);
+    }
+
+    @Override
+    public HashMap<Material, Integer> getFlora() {
+        HashMap<Material, Integer>flora = new HashMap<>();
+        flora.putAll(FloraBiomeUtils.getFlowers(1));
+        flora.put(Material.SHORT_GRASS, 10);
+        flora.put(Material.TALL_GRASS, 20);
+        return flora;
     }
 }
 

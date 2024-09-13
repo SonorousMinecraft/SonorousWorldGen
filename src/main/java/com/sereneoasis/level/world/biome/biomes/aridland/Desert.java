@@ -2,6 +2,9 @@ package com.sereneoasis.level.world.biome.biomes.aridland;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.DefaultFeatures;
+import com.sereneoasis.level.world.biome.biomefeatures.Feature;
+import com.sereneoasis.level.world.biome.biomefeatures.FeatureBiome;
 import com.sereneoasis.level.world.biome.biomefeatures.FloraBiome;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
@@ -10,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Desert extends BiomeRepresentation implements FloraBiome {
+public class Desert extends BiomeRepresentation implements FloraBiome, FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.SAND));
@@ -25,9 +28,15 @@ public class Desert extends BiomeRepresentation implements FloraBiome {
     @Override
     public HashMap<Material, Integer> getFlora() {
         HashMap<Material, Integer>flora = new HashMap<>();
-        flora.put(Material.CACTUS, 5);
         flora.put(Material.DEAD_BUSH, 5);
         return flora;
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.GRAVEL_CLUMP.get(), 0.1);
+        return feature;
     }
 }
 

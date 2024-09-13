@@ -15,7 +15,7 @@ import java.util.List;
 public class MangroveSwamp extends BiomeRepresentation implements TreeBiome, FloraBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
-        put(BiomeLayers.SURFACE, Arrays.asList(Material.WATER, Material.MUD, Material.DIRT));
+        put(BiomeLayers.SURFACE, Arrays.asList(Material.MUD, Material.MUD, Material.MUD, Material.DIRT));
         put(BiomeLayers.PRIMARY, Arrays.asList(Material.DIRT, Material.MUD));
         put(BiomeLayers.SECONDARY, Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE));
         put(BiomeLayers.BASE, List.of(Material.BEDROCK));
@@ -33,7 +33,7 @@ public class MangroveSwamp extends BiomeRepresentation implements TreeBiome, Flo
     public HashMap<Material, Integer> getFlora() {
         HashMap<Material, Integer>flora = new HashMap<>();
         flora.put(Material.SHORT_GRASS, 20);
-        flora.put(Material.BIG_DRIPLEAF, 5);
+        flora.put(Material.BIG_DRIPLEAF, 10);
         return flora;
     }
 

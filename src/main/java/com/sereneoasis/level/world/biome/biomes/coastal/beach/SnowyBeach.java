@@ -2,6 +2,7 @@ package com.sereneoasis.level.world.biome.biomes.coastal.beach;
 
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.BiomeRepresentation;
+import com.sereneoasis.level.world.biome.biomefeatures.*;
 import com.sereneoasis.level.world.biome.biomes.BiomeCategories;
 import org.bukkit.Material;
 
@@ -9,7 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class SnowyBeach extends BiomeRepresentation {
+public class SnowyBeach extends BiomeRepresentation implements FloraBiome, FeatureBiome {
 
     private static final HashMap<BiomeLayers, List<Material>> layers = new HashMap<>() {{
         put(BiomeLayers.SURFACE, List.of(Material.SNOW_BLOCK));
@@ -19,6 +20,23 @@ public class SnowyBeach extends BiomeRepresentation {
     }};
     public SnowyBeach() {
         super(org.bukkit.block.Biome.SNOWY_BEACH, "Snowy Beach", layers, -0.7, -0.3, 0, 0.2, BiomeCategories.COASTAL);
+
+
+    }
+
+    @Override
+    public HashMap<Material, Integer> getFlora() {
+        HashMap<Material, Integer>flora = new HashMap<>();
+        flora.put(Material.SNOW , 30);
+        flora.put(Material.FERN, 20);
+        return flora;
+    }
+
+    @Override
+    public HashMap<Feature, Double> getFeatures() {
+        HashMap<Feature, Double>feature = new HashMap<>();
+        feature.put(DefaultFeatures.SNOW_CLUMP.get(), 0.2);
+        return feature;
     }
 }
 

@@ -38,7 +38,7 @@ public class Schematics {
      * @param location where the schematic should be pasted
      */
     public static void pasteClipboard(String filename, Location location){
-        Clipboard clipboard = schematicClipboards.get().get(filename + ".schem");
+        Clipboard clipboard = schematicClipboards.get().get(filename);
         SchematicUtils.pasteClipboard(clipboard, location);
     }
 

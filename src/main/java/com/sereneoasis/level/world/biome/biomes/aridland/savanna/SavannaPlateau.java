@@ -34,10 +34,10 @@ public class SavannaPlateau extends BiomeRepresentation implements TreeBiome, Fl
     @Override
     public HashMap<Material, Integer> getFlora() {
         HashMap<Material, Integer>flora = new HashMap<>();
-        flora.put(Material.SHORT_GRASS, 5);
-        flora.put(Material.TALL_GRASS, 5);
-        flora.put(Material.DEAD_BUSH, 5);
-        flora.putAll(FloraBiomeUtils.getFlowers(10));
+        flora.put(Material.SHORT_GRASS, 10);
+        flora.put(Material.TALL_GRASS, 20);
+        flora.put(Material.DEAD_BUSH, 30);
+        flora.putAll(FloraBiomeUtils.getFlowers(1));
         return flora;
     }
 }

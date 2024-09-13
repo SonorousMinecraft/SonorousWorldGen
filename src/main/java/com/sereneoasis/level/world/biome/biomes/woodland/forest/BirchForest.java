@@ -36,7 +36,7 @@ public class BirchForest extends BiomeRepresentation implements TreeBiome, Flora
         flora.put(Material.SHORT_GRASS, 5);
         flora.put(Material.TALL_GRASS, 10);
         flora.put(Material.SWEET_BERRY_BUSH, 10);
-        flora.putAll(FloraBiomeUtils.getFlowers(10));
+        flora.putAll(FloraBiomeUtils.getFlowers(1));
 
         return flora;
     }

@@ -1,5 +1,6 @@
 package com.sereneoasis.utils;
 
+import com.fastasyncworldedit.core.FaweAPI;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
@@ -13,6 +14,7 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.io.File;
@@ -31,7 +33,7 @@ public class SchematicUtils {
      * @throws IOException If no file is found
      */
     public static void spawnSchematic(String schematicName, Location location) throws IOException {
-        File file = new File(schematicName + ".schem");
+        File file = new File(schematicName + ".schematic");
         Clipboard clipboard;
 
         ClipboardFormat format = ClipboardFormats.findByFile(file);
@@ -74,8 +76,12 @@ public class SchematicUtils {
      * @param location the Location for the clipboard to be pasted at
      */
     public static void pasteClipboard(Clipboard clipboard, Location location) {
-        World world = BukkitAdapter.adapt(location.getWorld());
+        World world = FaweAPI.getWorld("test");
         try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+            if (clipboard == null){
+                Bukkit.broadcastMessage("fuck");
+            }
+
             Operation operation = new ClipboardHolder(clipboard)
                     .createPaste(editSession)
                     .to(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
