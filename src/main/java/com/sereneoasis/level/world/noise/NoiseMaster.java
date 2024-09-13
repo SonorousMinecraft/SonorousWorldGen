@@ -41,7 +41,7 @@ public class NoiseMaster {
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0025F, NoiseCategories.CAVES).
                     attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0.4f, 0);
 
-        new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.017f, NoiseCategories.CAVE_WORMS );
+        new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.013f, NoiseCategories.CAVE_WORMS );
 //                .attachFractal(FastNoiseLite.FractalType.Ridged,1, 0, 0,0)
 //                .improveXYPlanes();
 

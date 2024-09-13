@@ -132,8 +132,6 @@ public class CustomChunkGenerator extends ChunkGenerator {
                         if (distanceToSurface > ChunkUtils.LAYER_1_HEIGHT) {
                             if (isSmallBubble(chunkX, chunkZ, x, y, z)) {
                                 chunkData.setBlock(x, y, z, Material.CAVE_AIR);
-                            } else if (isCavern(chunkX, chunkZ, x, y, z)) {
-                                chunkData.setBlock(x, y, z, Material.CAVE_AIR);
                             } else if (isCave(chunkX, chunkZ, x, y, z)) {
                                 chunkData.setBlock(x, y, z, Material.CAVE_AIR);
                             }
@@ -166,7 +164,6 @@ public class CustomChunkGenerator extends ChunkGenerator {
     }
 
     private static final int MAX_SMALL_BUBBLE = 40, MIN_SMALL_BUBBLE = -30;
-    private static final int MAX_CAVERN = 40, MIN_CAVERN = -50;
 
     private static final int NARROW_CAVE_END = 40, MEDIUM_CAVE_END = 80, LARGE_CAVE_END = 140;
 
@@ -174,11 +171,8 @@ public class CustomChunkGenerator extends ChunkGenerator {
         return y < MAX_SMALL_BUBBLE && y > MIN_SMALL_BUBBLE && NoiseMaster.getCaveNoise(chunkX, chunkZ, x, y, z) > 0.7;
     }
 
-    private static boolean isCavern(int chunkX, int chunkZ, int x, int y, int z) {
-        return y < MAX_CAVERN && y > MIN_CAVERN && NoiseMaster.getCaveNoise(chunkX, chunkZ, x, y, z) > 0.5;
-    }
 
-    private static final double NARROW_NOISE =0.3, MEDIUM_NOISE=0.2, LARGE_NOISE=0;
+    private static final double NARROW_NOISE =0.4, MEDIUM_NOISE=0.3, LARGE_NOISE=0.1;
     private static boolean isCave(int chunkX, int chunkZ, int x, int y, int z) {
         double heightFromSurface =ChunkUtils.getCurrentY(x, chunkX, z, chunkZ) -  y ;
         if (heightFromSurface < NARROW_CAVE_END){
