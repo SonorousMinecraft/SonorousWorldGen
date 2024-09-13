@@ -47,8 +47,6 @@ public class CustomChunkGenerator extends ChunkGenerator {
                         // It is not the closest block to the surface but still very close.
                         if (distanceToSurface < ChunkUtils.LAYER_1_HEIGHT) {
                             chunkData.setBlock(x, y, z, layers.get(BiomeLayers.PRIMARY).get(random.nextInt(layers.get(BiomeLayers.PRIMARY).size())));
-                        } else {
-                            chunkData.setBlock(x, y, z, layers.get(BiomeLayers.SECONDARY).get(random.nextInt(layers.get(BiomeLayers.SECONDARY).size())));
                         }
                     } else if (y - currentY < 40 && KingdomUtils.isKingdomWalls(chunkX * 16 + x, chunkZ * 16 + z)) {
                         chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
@@ -126,20 +124,25 @@ public class CustomChunkGenerator extends ChunkGenerator {
                 boolean ocean = currentY <= ChunkUtils.SEA_LEVEL;
                 HashMap<BiomeLayers, List<Material>> layers = NoiseMaster.getBiomeLayers(chunkX * 16 + x, chunkZ * 16 + z, ocean);
 
-                for (int y = chunkData.getMinHeight(); y < ChunkUtils.Y_LIMIT && y < chunkData.getMaxHeight(); y++) {
+                for (int y = chunkData.getMinHeight() + 2; y < ChunkUtils.Y_LIMIT && y < chunkData.getMaxHeight(); y++) {
 
                     if (y < currentY) {
                         float distanceToSurface = Math.abs(y - currentY); // The absolute y distance to the world surface.
                         // Not close to the surface at all.
                         if (distanceToSurface > ChunkUtils.LAYER_1_HEIGHT) {
-                            if (NoiseMaster.getCaveNoise(chunkX, chunkZ, x, y, z) > 0.4) {
+                            if (isSmallBubble(chunkX, chunkZ, x, y, z)) {
                                 chunkData.setBlock(x, y, z, Material.CAVE_AIR);
-                            } else {
+                            } else if (isCavern(chunkX, chunkZ, x, y, z)) {
+                                chunkData.setBlock(x, y, z, Material.CAVE_AIR);
+                            } else if (isCave(chunkX, chunkZ, x, y, z)) {
+                                chunkData.setBlock(x, y, z, Material.CAVE_AIR);
+                            }
+                            else {
                                 Material neighbour = Material.STONE;
                                 List<Material> neighbourBlocks = new ArrayList<Material>(Arrays.asList(chunkData.getType(Math.max(x - 1, 0), y, z), chunkData.getType(x, Math.max(y - 1, 0), z), chunkData.getType(x, y, Math.max(z - 1, 0)))); // A list of all neighbour blocks.
 
                                 // Randomly place vein anchors.
-                                if (random.nextFloat() < 0.002) {
+                                if (random.nextFloat() < 0.0002) {
                                     neighbour = layers.get(BiomeLayers.SECONDARY).get(Math.min(random.nextInt(layers.get(BiomeLayers.SECONDARY).size()), random.nextInt(layers.get(BiomeLayers.SECONDARY).size()))); // A basic way to shift probability to lower values.
                                 }
 
@@ -162,11 +165,40 @@ public class CustomChunkGenerator extends ChunkGenerator {
         }
     }
 
-    @NotNull
-    @Override
-    public List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
-        return List.of(new TreePopulator(), new FloraPopulator(), new FeaturePopulator());
+    private static final int MAX_SMALL_BUBBLE = 40, MIN_SMALL_BUBBLE = -30;
+    private static final int MAX_CAVERN = 40, MIN_CAVERN = -50;
+
+    private static final int NARROW_CAVE_END = 40, MEDIUM_CAVE_END = 80, LARGE_CAVE_END = 140;
+
+    private static boolean isSmallBubble(int chunkX, int chunkZ, int x, int y, int z) {
+        return y < MAX_SMALL_BUBBLE && y > MIN_SMALL_BUBBLE && NoiseMaster.getCaveNoise(chunkX, chunkZ, x, y, z) > 0.7;
     }
+
+    private static boolean isCavern(int chunkX, int chunkZ, int x, int y, int z) {
+        return y < MAX_CAVERN && y > MIN_CAVERN && NoiseMaster.getCaveNoise(chunkX, chunkZ, x, y, z) > 0.5;
+    }
+
+    private static final double NARROW_NOISE =0.3, MEDIUM_NOISE=0.2, LARGE_NOISE=0;
+    private static boolean isCave(int chunkX, int chunkZ, int x, int y, int z) {
+        double heightFromSurface =ChunkUtils.getCurrentY(x, chunkX, z, chunkZ) -  y ;
+        if (heightFromSurface < NARROW_CAVE_END){
+            return NoiseMaster.getCaveWormNoise(chunkX, chunkZ, x, y, z) > NARROW_NOISE;
+        } else if (heightFromSurface < MEDIUM_CAVE_END){
+            double noiseRequired = (heightFromSurface - NARROW_CAVE_END)/(MEDIUM_CAVE_END - heightFromSurface) * (NARROW_NOISE - MEDIUM_NOISE) + MEDIUM_NOISE;
+            return NoiseMaster.getCaveWormNoise(chunkX, chunkZ, x, y, z) > noiseRequired;
+        } else if (heightFromSurface < LARGE_CAVE_END){
+            double noiseRequired = (heightFromSurface - MEDIUM_CAVE_END)/(LARGE_CAVE_END - heightFromSurface) * (MEDIUM_NOISE - LARGE_NOISE) + LARGE_NOISE;
+
+            return NoiseMaster.getCaveWormNoise(chunkX, chunkZ, x, y, z) > noiseRequired;
+        }
+        return false;
+    }
+
+//    @NotNull
+//    @Override
+//    public List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
+//        return List.of(new TreePopulator(), new FloraPopulator(), new FeaturePopulator());
+//    }
 
     @Override
     public boolean shouldGenerateMobs() {

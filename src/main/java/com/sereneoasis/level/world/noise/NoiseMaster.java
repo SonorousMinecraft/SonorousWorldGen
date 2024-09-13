@@ -38,10 +38,14 @@ public class NoiseMaster {
                 attachFractal(FastNoiseLite.FractalType.PingPong, 3, 10, 0.5f, 0).
                  attachPingPong(1.0f);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.001F, NoiseCategories.CAVES).
+            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.0025F, NoiseCategories.CAVES).
                     attachFractal(FastNoiseLite.FractalType.FBm, 3, 0, 0.4f, 0);
 
-            new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.05F, NoiseCategories.FLORA).
+        new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.017f, NoiseCategories.CAVE_WORMS );
+//                .attachFractal(FastNoiseLite.FractalType.Ridged,1, 0, 0,0)
+//                .improveXYPlanes();
+
+        new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2, 0.05F, NoiseCategories.FLORA).
                     attachFractal(FastNoiseLite.FractalType.FBm, 2, 0, 0, 0);
 
             new GenerationNoise(FastNoiseLite.NoiseType.OpenSimplex2,0.02F, NoiseCategories.CUSTOM_TREES).
@@ -160,6 +164,19 @@ public class NoiseMaster {
      */
     public static float getCaveNoise(int chunkX, int chunkZ, int x, int y, int z){
         return GenerationNoise.getNoise(NoiseCategories.CAVES, chunkX * 16 + x, y, chunkZ * 16 + z);
+    }
+
+    /***
+     * Obtains the noise used to generate caves
+     * @param chunkX The value representing the Chunk X (it's actual X coordinate divided by 16)
+     * @param chunkZ The value representing the Chunk Z (it's actual Z coordinate divided by 16)
+     * @param x The X value relative to the chunk (from 0-15)
+     * @param y The Y value
+     * @param z The Z value relative to the chunk (from 0-15)
+     * @return A value from -1 to 1 used to control cave generation
+     */
+    public static float getCaveWormNoise(int chunkX, int chunkZ, int x, int y, int z){
+        return GenerationNoise.getNoise(NoiseCategories.CAVE_WORMS, chunkX * 16 + x, y, chunkZ * 16 + z);
     }
 
     /***

@@ -82,9 +82,7 @@ com/sereneoasis/level/world/biome/biomes/aridland/Desert.class
 com/sereneoasis/level/world/biome/biomes/woodland/forest/BirchForest.class
 com/sereneoasis/level/world/biome/biomes/woodland/taiga/SnowyTaiga$1.class
 com/sereneoasis/level/world/biome/biomes/aridland/savanna/Savanna$1.class
-com/sereneoasis/level/world/biome/biomes/woodland/taiga/OldGrowthSpruceTaiga$1.class
 com/sereneoasis/level/world/biome/biomes/woodland/jungle/SparseJungle.class
-com/sereneoasis/level/world/biome/biomes/woodland/taiga/OldGrowthSpruceTaiga.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/DeepColdOcean$1.class
 com/sereneoasis/level/world/biome/biomes/highland/groves/Grove.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/DeepColdOcean.class
@@ -127,6 +125,7 @@ com/sereneoasis/level/world/biome/biomefeatures/FloraBiome.class
 com/sereneoasis/level/world/biome/biomes/woodland/forest/FlowerForest.class
 com/sereneoasis/level/world/biome/biomes/aridland/badlands/Badlands.class
 com/sereneoasis/level/world/KingdomUtils.class
+com/sereneoasis/level/world/noise/CaveUtils.class
 com/sereneoasis/level/world/biome/biomes/aridland/savanna/SavannaPlateau.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/cold/FrozenOcean.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/warm/WarmOcean.class

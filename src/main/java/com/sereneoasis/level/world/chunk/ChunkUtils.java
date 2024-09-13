@@ -9,9 +9,9 @@ import com.sereneoasis.level.world.noise.NoiseMaster;
 public class ChunkUtils {
 
     public static final int Y_LIMIT = 300;
-    public static final int SEA_LEVEL = 50;
+    public static final int SEA_LEVEL = 70;
     public static final int LAYER_1_HEIGHT = 10;
-    public static final int AVERAGE_HEIGHT = 100;
+    public static final int AVERAGE_HEIGHT = 150;
     public static final int CONTINENTALNESS_DEVIATION = 100;
     public static final int TERRAIN_DEVIATION = 20;
     public static final int DETAIL_DEVIATION = 3;
