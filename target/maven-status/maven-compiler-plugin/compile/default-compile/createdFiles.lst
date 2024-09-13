@@ -63,6 +63,7 @@ com/sereneoasis/libs/FastNoiseLite$CellularReturnType.class
 com/sereneoasis/level/world/biome/biomes/woodland/jungle/Jungle.class
 com/sereneoasis/libs/FastNoiseLite$FractalType.class
 com/sereneoasis/level/world/biome/biomefeatures/StructureBiome.class
+com/sereneoasis/loader/Kingdom.class
 com/sereneoasis/level/world/biome/biomes/aridland/Desert$1.class
 com/sereneoasis/level/world/biome/biomes/BiomeCategories.class
 com/sereneoasis/level/world/biome/biomes/woodland/taiga/Taiga.class
@@ -77,6 +78,7 @@ com/sereneoasis/level/world/biome/biomes/highland/peaks/StonyPeaks.class
 com/sereneoasis/utils/PacketListenerImpl.class
 com/sereneoasis/level/world/biome/biomes/highland/groves/Grove$1.class
 com/sereneoasis/level/world/biome/biomes/aridland/savanna/Savanna.class
+com/sereneoasis/loader/Civilisation.class
 com/sereneoasis/utils/BlockUtils.class
 com/sereneoasis/level/world/biome/biomes/aridland/Desert.class
 com/sereneoasis/level/world/biome/biomes/woodland/forest/BirchForest.class
