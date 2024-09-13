@@ -67,7 +67,7 @@ public class NoiseMaster {
         double targetContinentalness = GenerationNoise.getNoise(NoiseCategories.CONTINENTALNESS, x, z) ;
 
 
-        if (!KingdomUtils.isInsideKingdom(x, z) && GenerationNoise.getNoise(NoiseCategories.RIVER, x ,z ) > 0.95 && targetContinentalness >= -0.1 && targetContinentalness < 0.3 ) {
+        if (!KingdomUtils.isInsideKingdomInclWalls(x, z) && GenerationNoise.getNoise(NoiseCategories.RIVER, x ,z ) > 0.95 && targetContinentalness >= -0.1 && targetContinentalness < 0.3 ) {
             category = BiomeCategories.RIVER;
         } else {
 
