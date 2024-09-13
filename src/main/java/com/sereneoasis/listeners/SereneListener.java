@@ -60,14 +60,14 @@ public class SereneListener implements Listener {
 
 
 
-    private static ChunkHandler chunkHandler;
-    @EventHandler
-    public void onWorldLoad(WorldLoadEvent event){
-        if (event.getWorld().getName().equals("test")) {
-            World world = event.getWorld();
-            chunkHandler = new ChunkHandler(world);
-        }
-    }
+//    private static ChunkHandler chunkHandler;
+//    @EventHandler
+//    public void onWorldLoad(WorldLoadEvent event){
+//        if (event.getWorld().getName().equals("test")) {
+//            World world = event.getWorld();
+//            chunkHandler = new ChunkHandler(world);
+//        }
+//    }
     
 
 

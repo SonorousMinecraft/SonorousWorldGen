@@ -71,7 +71,6 @@ public class ChunkHandler {
                             Bukkit.broadcastMessage("chunk loaded " + x + ", " + z);
                             Chunk currentChunk = world.getChunkAt(x, z, true);
                             Bukkit.getScheduler().runTask(SereneWorldGen.plugin, () -> currentChunk.addPluginChunkTicket(SereneWorldGen.plugin));
-
                             schematicChunks.add(currentChunk);
                             Thread.sleep(200);
 

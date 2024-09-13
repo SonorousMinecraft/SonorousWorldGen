@@ -50,7 +50,7 @@ public class GenerationNoise {
      * @return a value from -1 to 1 representing the noise
      */
     public static float getNoise(NoiseCategories noiseCategories, int x, int y, int z){
-        return NOISE_TYPE_FUNCTION_MAP.get(noiseCategories).GetNoise(x, y, z) ;
+        return NOISE_TYPE_FUNCTION_MAP.get(noiseCategories).GetNoise(x, z, y) ;
     }
 
     private final FastNoiseLite noise;
@@ -98,5 +98,8 @@ public class GenerationNoise {
         return this;
     }
 
-
+    public GenerationNoise improveXYPlanes(){
+        noise.SetRotationType3D(FastNoiseLite.RotationType3D.ImproveXYPlanes);
+        return this;
+    }
 }

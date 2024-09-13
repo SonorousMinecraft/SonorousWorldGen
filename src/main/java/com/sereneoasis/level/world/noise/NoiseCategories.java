@@ -15,6 +15,8 @@ public enum NoiseCategories {
 
     CAVES,
 
+    CAVE_WORMS,
+
     FLORA,
 
     RIVER,
