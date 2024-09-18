@@ -26,32 +26,33 @@ public class ChunkUtils {
         if (NoiseMaster.getCategory(x, z, true).equals(BiomeCategories.OFF)) {
             return ChunkUtils.SEA_LEVEL;
         }
+        return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION);
 
 
-        if (KingdomUtils.isInsideKingdomInclWalls(x, z)){
-            return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION);
-        }
-
-
-        if (NoiseMaster.getCategory(x, z, true).equals(BiomeCategories.RIVER)  ) {
-            return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION) +  (terrain*TERRAIN_DEVIATION);
-        }
-
-
-        if (terrain > 0.9){
-            terrain = (float) Math.pow(8, (terrain-0.9));
-        }
-
-        if (continentalness > 0.8){
-            continentalness = (float) Math.pow(4, (continentalness)) - 2.23143313302f;
-        }
-
-        float detail = GenerationNoise.getNoise(NoiseCategories.DETAIl, x ,z);
-        float currentY = AVERAGE_HEIGHT +
-                (continentalness * CONTINENTALNESS_DEVIATION) +
-                (terrain*TERRAIN_DEVIATION) +
-                DETAIL_DEVIATION * detail;
-        return currentY;
+//        if (KingdomUtils.isInsideKingdomInclWalls(x, z)){
+//            return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION);
+//        }
+//
+//
+//        if (NoiseMaster.getCategory(x, z, true).equals(BiomeCategories.RIVER)  ) {
+//            return AVERAGE_HEIGHT + (continentalness * CONTINENTALNESS_DEVIATION) +  (terrain*TERRAIN_DEVIATION);
+//        }
+//
+//
+//        if (terrain > 0.9){
+//            terrain = (float) Math.pow(8, (terrain-0.9));
+//        }
+//
+//        if (continentalness > 0.8){
+//            continentalness = (float) Math.pow(4, (continentalness)) - 2.23143313302f;
+//        }
+//
+//        float detail = GenerationNoise.getNoise(NoiseCategories.DETAIl, x ,z);
+//        float currentY = AVERAGE_HEIGHT +
+//                (continentalness * CONTINENTALNESS_DEVIATION) +
+//                (terrain*TERRAIN_DEVIATION) +
+//                DETAIL_DEVIATION * detail;
+//        return currentY;
     }
 
 

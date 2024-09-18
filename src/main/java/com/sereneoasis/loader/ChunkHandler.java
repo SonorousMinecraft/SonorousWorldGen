@@ -19,12 +19,13 @@ import java.util.*;
 public class ChunkHandler {
 
 
-    private int squareLength = 1000;
+    private int squareLength = 200;
 
 
     public ChunkHandler(World world) {
 
         new Kingdom(world, squareLength);
+//        new Town(world, squareLength);
     }
 
 

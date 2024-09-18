@@ -28,11 +28,14 @@ public abstract class Civilisation {
             try {
                 for (int x = currentX; x < squareLength / 2; x++) {
                     for (int z = currentZ; z < squareLength / 2; z++) {
+                        Bukkit.broadcastMessage("currently at X: " + x + " Z: " + z );
+
                         if (shouldGenerate.test(x*16, z*16)) {
                             Chunk currentChunk = world.getChunkAt(x, z, true);
                             Bukkit.getScheduler().runTask(SereneWorldGen.plugin, () -> currentChunk.addPluginChunkTicket(SereneWorldGen.plugin));
                             schematicChunks.add(currentChunk);
-                            Thread.sleep(50);
+
+                            Thread.sleep(2000);
 
                         }
 
@@ -65,9 +68,9 @@ public abstract class Civilisation {
 
 
     protected void pasteSchematic(Location loc, File[] schems){
-        Bukkit.broadcastMessage("pasted");
         Random rand = new Random();
         File schem = schems[rand.nextInt(schems.length) ];
+        Bukkit.broadcastMessage("pasted schematic at " + loc);
 
         Schematics.pasteClipboard(schem.getName(), loc.clone());
     }
@@ -85,8 +88,10 @@ public abstract class Civilisation {
     protected boolean isPopulated(int length, int x, int z){
         for (int newX = 0; newX<length; newX ++) {
             for (int newZ = 0; newZ < length; newZ++) {
-                int chunkX = x + newX;
-                int chunkZ = z + newZ;
+                int chunkX = x/16 + newX;
+                int chunkZ = z/16 + newZ;
+                Bukkit.broadcastMessage("pasted schematic at X: " + chunkX*16 + " Z: " + chunkZ * 16);
+
                 if (populatedChunks.stream().anyMatch(chunk -> (chunk.getX() == chunkX ) && (chunk.getZ() == chunkZ ) )){
                     return true;
                 }
