@@ -19,7 +19,7 @@ import java.util.*;
 public class ChunkHandler {
 
 
-    private int squareLength = 200;
+    private int squareLength = 100;
 
 
     public ChunkHandler(World world) {

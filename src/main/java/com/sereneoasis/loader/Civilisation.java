@@ -1,16 +1,22 @@
 package com.sereneoasis.loader;
 
 import com.sereneoasis.SereneWorldGen;
+import com.sereneoasis.ability.Archetype;
 import com.sereneoasis.level.world.KingdomUtils;
 import com.sereneoasis.level.world.Schematics;
 import com.sereneoasis.level.world.noise.GenerationNoise;
 import com.sereneoasis.level.world.noise.NoiseCategories;
+import com.sereneoasis.mobs.SereneMonster;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Panda;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import oshi.util.tuples.Pair;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -35,7 +41,7 @@ public abstract class Civilisation {
                             Bukkit.getScheduler().runTask(SereneWorldGen.plugin, () -> currentChunk.addPluginChunkTicket(SereneWorldGen.plugin));
                             schematicChunks.add(currentChunk);
 
-                            Thread.sleep(2000);
+                            Thread.sleep(500);
 
                         }
 
@@ -55,44 +61,55 @@ public abstract class Civilisation {
                 if (chunk.getLoadLevel().equals(Chunk.LoadLevel.ENTITY_TICKING)) {
                     int x = chunk.getX() * 16;
                     int z = chunk.getZ() * 16;
-                    generateCivilisation(chunk);
+                    try {
+                        generateCivilisation(chunk);
+                    } catch (InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    } catch (InstantiationException e) {
+                        throw new RuntimeException(e);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    } catch (NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
             schematicChunks.removeIf(chunk -> chunk.getLoadLevel().equals(Chunk.LoadLevel.ENTITY_TICKING));
         }, 1000L, 100L);
     }
 
-    abstract void generateCivilisation(Chunk chunk);
+    abstract void generateCivilisation(Chunk chunk) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
     protected static Set<Chunk> schematicChunks = new HashSet<>();
 
 
-    protected void pasteSchematic(Location loc, File[] schems){
+    protected void pasteSchematic(Location loc, File[] schems) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         Random rand = new Random();
         File schem = schems[rand.nextInt(schems.length) ];
         Bukkit.broadcastMessage("pasted schematic at " + loc);
 
         Schematics.pasteClipboard(schem.getName(), loc.clone());
+        new SereneMonster(loc, Archetype.EARTH);
     }
 
-    protected static Set<Chunk> populatedChunks = new HashSet<>();
+    protected static Set<Pair<Integer, Integer>> populatedChunks = new HashSet<>();
 
-    protected void cacheSquare(World world, int length, int x, int z){
-        for (int newX = 0; newX<length; newX ++) {
+    protected void cacheSquare(World world, int length, int chunkX, int chunkZ){
+        for (int newX = 0; newX< length; newX ++) {
             for (int newZ = 0; newZ < length; newZ++) {
-                populatedChunks.add(world.getChunkAt(x + newX, z + newZ));
+
+                populatedChunks.add(new Pair<>(chunkX + newX, chunkZ + newZ));
             }
         }
     }
 
-    protected boolean isPopulated(int length, int x, int z){
+    protected boolean isPopulated(int length, int chunkX, int chunkZ){
         for (int newX = 0; newX<length; newX ++) {
             for (int newZ = 0; newZ < length; newZ++) {
-                int chunkX = x/16 + newX;
-                int chunkZ = z/16 + newZ;
-                Bukkit.broadcastMessage("pasted schematic at X: " + chunkX*16 + " Z: " + chunkZ * 16);
+                int newChunkX = chunkX + newX;
+                int newChunkZ = chunkZ + newZ;
 
-                if (populatedChunks.stream().anyMatch(chunk -> (chunk.getX() == chunkX ) && (chunk.getZ() == chunkZ ) )){
+                if (populatedChunks.stream().anyMatch(integerIntegerPair -> integerIntegerPair.getA() ==newChunkX && integerIntegerPair.getB() == newChunkZ)){
                     return true;
                 }
             }

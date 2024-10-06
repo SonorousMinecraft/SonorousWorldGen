@@ -9,13 +9,15 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class Kingdom extends Civilisation{
     public Kingdom(World world, int squareLength) {
         super(world, squareLength, (x,z) -> KingdomUtils.isInsideKingdomExclWalls(x, z ));
     }
 
     @Override
-    void generateCivilisation(Chunk chunk) {
+    void generateCivilisation(Chunk chunk) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         int x = chunk.getX() * 16;
 
         int z = chunk.getZ() * 16;
@@ -24,24 +26,24 @@ public class Kingdom extends Civilisation{
 
         if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x ,z) < 0 ) {
             if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+48 ,z+48) < 0 ) {
-                if (!isPopulated(3, x, z)) {
-                    cacheSquare(world, 3, x, z);
+                if (!isPopulated(3, chunk.getX(), chunk.getZ())) {
+                    cacheSquare(world, 3, chunk.getX(), chunk.getZ());
                     pasteSchematic(loc, SereneWorldGen.getFileManager().getBigHouseSchematics());
                 }
             }
             else {
                 if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+32 ,z+32) < 0 ) {
-                    if (!isPopulated( 2, x, z)) {
+                    if (!isPopulated( 2, chunk.getX(), chunk.getZ())) {
 
-                        cacheSquare(world, 2, x, z);
+                        cacheSquare(world, 2, chunk.getX(), chunk.getZ());
 
                         pasteSchematic(loc, SereneWorldGen.getFileManager().getMediumHouseSchematics());
                     }
                 } else {
 
                     if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+16 ,z+16) < 0 ) {
-                        if (!isPopulated(1, x, z)) {
-                            cacheSquare(world, 1, x, z);
+                        if (!isPopulated(1, chunk.getX(), chunk.getZ())) {
+                            cacheSquare(world, 1, chunk.getX(), chunk.getZ());
                             pasteSchematic(loc, SereneWorldGen.getFileManager().getSmallHouseSchematics());
                         }
                     }

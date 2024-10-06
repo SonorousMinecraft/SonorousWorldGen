@@ -110,6 +110,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.sereneoasis</groupId>
+            <artifactId>SereneMobs</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.fastasyncworldedit</groupId>
             <artifactId>FastAsyncWorldEdit-Core</artifactId>
             <scope>provided</scope>

@@ -73,19 +73,19 @@ public class SereneListener implements Listener {
 
 
 
-    @EventHandler
-    public void onChunkLoad(ChunkLoadEvent event) {
-
-        if (!event.isNewChunk()) {
-            return;
-        }
-        Chunk chunk = event.getChunk();
-
-
-//        genTrees(chunk, event);
-
-
-    }
+//    @EventHandler
+//    public void onChunkLoad(ChunkLoadEvent event) {
+//
+//        if (!event.isNewChunk()) {
+//            return;
+//        }
+//        Chunk chunk = event.getChunk();
+//
+//
+////        genTrees(chunk, event);
+//
+//
+//    }
 
     private static final ConcurrentHashMap<Chunk, BasicNPC > npcs = new ConcurrentHashMap<>();
 
@@ -102,7 +102,6 @@ public class SereneListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent playerMoveEvent) {
         Player player = playerMoveEvent.getPlayer();
-
         if (player.getName().equals("Sakrajin")) {
             World world = player.getWorld();
             Biome newBiome = world.getBiome(playerMoveEvent.getTo());
