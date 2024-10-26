@@ -28,5 +28,9 @@ public enum NoiseCategories {
 
     KINGDOM_PATHS,
 
+    TOWN_BORDERS,
+
+    TOWN_PATHS,
+
     ROADS;
 }

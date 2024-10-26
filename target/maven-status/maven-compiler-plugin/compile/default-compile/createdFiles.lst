@@ -18,6 +18,7 @@ com/sereneoasis/level/world/chunk/populator/TreePopulator.class
 com/sereneoasis/level/world/biome/biomes/flatland/IceSpikes.class
 com/sereneoasis/level/world/biome/BiomeRepresentation.class
 com/sereneoasis/level/world/noise/NoiseCategories.class
+com/sereneoasis/loader/Town.class
 com/sereneoasis/level/world/biome/biomes/offland/oceans/warm/DeepLukewarmOcean$1.class
 com/sereneoasis/level/world/biome/biomefeatures/TreeBiome.class
 com/sereneoasis/libs/FastNoiseLite$CellularDistanceFunction.class
@@ -43,6 +44,7 @@ com/sereneoasis/level/world/biome/biomes/aridland/badlands/ErodedBadlands.class
 com/sereneoasis/level/world/biome/biomes/highland/peaks/JaggedPeaks.class
 com/sereneoasis/level/world/biome/biomes/woodland/forest/DarkForest$1.class
 com/sereneoasis/libs/FastNoiseLite$TransformType3D.class
+com/sereneoasis/level/world/TownUtils.class
 com/sereneoasis/level/world/biome/biomes/wetland/swamp/MangroveSwamp$1.class
 com/sereneoasis/libs/FastNoiseLite$1.class
 com/sereneoasis/level/world/biome/biomes/aridland/badlands/ErodedBadlands$1.class
@@ -63,6 +65,7 @@ com/sereneoasis/libs/FastNoiseLite$CellularReturnType.class
 com/sereneoasis/level/world/biome/biomes/woodland/jungle/Jungle.class
 com/sereneoasis/libs/FastNoiseLite$FractalType.class
 com/sereneoasis/level/world/biome/biomefeatures/StructureBiome.class
+com/sereneoasis/loader/Kingdom.class
 com/sereneoasis/level/world/biome/biomes/aridland/Desert$1.class
 com/sereneoasis/level/world/biome/biomes/BiomeCategories.class
 com/sereneoasis/level/world/biome/biomes/woodland/taiga/Taiga.class
@@ -77,6 +80,7 @@ com/sereneoasis/level/world/biome/biomes/highland/peaks/StonyPeaks.class
 com/sereneoasis/utils/PacketListenerImpl.class
 com/sereneoasis/level/world/biome/biomes/highland/groves/Grove$1.class
 com/sereneoasis/level/world/biome/biomes/aridland/savanna/Savanna.class
+com/sereneoasis/loader/Civilisation.class
 com/sereneoasis/utils/BlockUtils.class
 com/sereneoasis/level/world/biome/biomes/aridland/Desert.class
 com/sereneoasis/level/world/biome/biomes/woodland/forest/BirchForest.class

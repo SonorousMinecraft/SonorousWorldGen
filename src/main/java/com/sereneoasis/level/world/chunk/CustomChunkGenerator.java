@@ -1,6 +1,7 @@
 package com.sereneoasis.level.world.chunk;
 
 import com.sereneoasis.level.world.KingdomUtils;
+import com.sereneoasis.level.world.TownUtils;
 import com.sereneoasis.level.world.biome.BiomeLayers;
 import com.sereneoasis.level.world.biome.CustomBiomeProvider;
 import com.sereneoasis.level.world.chunk.populator.FeaturePopulator;
@@ -48,8 +49,13 @@ public class CustomChunkGenerator extends ChunkGenerator {
                         if (distanceToSurface < ChunkUtils.LAYER_1_HEIGHT) {
                             chunkData.setBlock(x, y, z, layers.get(BiomeLayers.PRIMARY).get(random.nextInt(layers.get(BiomeLayers.PRIMARY).size())));
                         }
-                    } else if (y - currentY < 40 && KingdomUtils.isKingdomWalls(chunkX * 16 + x, chunkZ * 16 + z)) {
-                        chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
+                    } else {
+                        if (y - currentY < KingdomUtils.WALL_HEIGHT && KingdomUtils.isKingdomWalls(chunkX * 16 + x, chunkZ * 16 + z)) {
+                            chunkData.setBlock(x, y, z, Material.STONE_BRICKS);
+                        }
+//                        } else if (y - currentY < TownUtils.WALL_HEIGHT && TownUtils.isTownWalls(chunkX * 16 + x, chunkZ * 16 + z)) {
+//                            chunkData.setBlock(x, y, z, Material.STRIPPED_OAK_WOOD);
+//                        }
                     }
 
                     if (y <= ChunkUtils.SEA_LEVEL && ocean) {
