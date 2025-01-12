@@ -29,14 +29,14 @@ public class Town extends Civilisation{
 
                         cacheSquare(world, 2, chunk.getX(), chunk.getZ());
 
-                        pasteSchematic(loc, SereneWorldGen.getFileManager().getMediumHouseSchematics());
+                        pasteSchematic(loc, 2, SereneWorldGen.getFileManager().getMediumHouseSchematics());
                     }
                 } else {
 
                     if (GenerationNoise.getNoise(NoiseCategories.TOWN_PATHS, x+16 ,z+16) < 0 ) {
                         if (!isPopulated(1, chunk.getX(), chunk.getZ())) {
                             cacheSquare(world, 1, chunk.getX(), chunk.getZ());
-                            pasteSchematic(loc, SereneWorldGen.getFileManager().getSmallHouseSchematics());
+                            pasteSchematic(loc, 1, SereneWorldGen.getFileManager().getSmallHouseSchematics());
                         }
                     }
                 }

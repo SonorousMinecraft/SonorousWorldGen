@@ -22,6 +22,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 
 public abstract class Civilisation {
     
@@ -34,7 +35,7 @@ public abstract class Civilisation {
             try {
                 for (int x = currentX; x < squareLength / 2; x++) {
                     for (int z = currentZ; z < squareLength / 2; z++) {
-                        Bukkit.broadcastMessage("currently at X: " + x + " Z: " + z );
+//                        Bukkit.broadcastMessage("currently at X: " + x + " Z: " + z );
 
                         if (shouldGenerate.test(x*16, z*16)) {
                             Chunk currentChunk = world.getChunkAt(x, z, true);
@@ -44,8 +45,9 @@ public abstract class Civilisation {
                             Thread.sleep(500);
 
                         }
-
-
+                        if (x == squareLength-1 && z == squareLength-1){
+                            Bukkit.getServer().getLogger().log(Level.INFO, "Finished generating civilisations");
+                        }
                     }
                 }
 
@@ -83,13 +85,15 @@ public abstract class Civilisation {
     protected static Set<Chunk> schematicChunks = new HashSet<>();
 
 
-    protected void pasteSchematic(Location loc, File[] schems) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    protected void pasteSchematic(Location loc,int length, File[] schems) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         Random rand = new Random();
         File schem = schems[rand.nextInt(schems.length) ];
         Bukkit.broadcastMessage("pasted schematic at " + loc);
 
         Schematics.pasteClipboard(schem.getName(), loc.clone());
-        new SereneMonster(loc, Archetype.EARTH);
+
+
+//        new SereneMonster(loc, Archetype.EARTH);
     }
 
     protected static Set<Pair<Integer, Integer>> populatedChunks = new HashSet<>();

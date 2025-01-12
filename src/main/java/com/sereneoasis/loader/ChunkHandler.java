@@ -16,10 +16,12 @@ import oshi.util.tuples.Pair;
 import java.io.File;
 import java.util.*;
 
+import static com.sereneoasis.command.SerenityCommand.CHUNK_SQUARE_TO_LOAD;
+
 public class ChunkHandler {
 
 
-    private int squareLength = 100;
+    private int squareLength = CHUNK_SQUARE_TO_LOAD;
 
 
     public ChunkHandler(World world) {

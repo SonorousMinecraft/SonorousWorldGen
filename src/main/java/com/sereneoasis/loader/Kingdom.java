@@ -28,7 +28,7 @@ public class Kingdom extends Civilisation{
             if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+48 ,z+48) < 0 ) {
                 if (!isPopulated(3, chunk.getX(), chunk.getZ())) {
                     cacheSquare(world, 3, chunk.getX(), chunk.getZ());
-                    pasteSchematic(loc, SereneWorldGen.getFileManager().getBigHouseSchematics());
+                    pasteSchematic(loc, 3, SereneWorldGen.getFileManager().getBigHouseSchematics());
                 }
             }
             else {
@@ -37,14 +37,14 @@ public class Kingdom extends Civilisation{
 
                         cacheSquare(world, 2, chunk.getX(), chunk.getZ());
 
-                        pasteSchematic(loc, SereneWorldGen.getFileManager().getMediumHouseSchematics());
+                        pasteSchematic(loc, 2, SereneWorldGen.getFileManager().getMediumHouseSchematics());
                     }
                 } else {
 
                     if (GenerationNoise.getNoise(NoiseCategories.KINGDOM_PATHS, x+16 ,z+16) < 0 ) {
                         if (!isPopulated(1, chunk.getX(), chunk.getZ())) {
                             cacheSquare(world, 1, chunk.getX(), chunk.getZ());
-                            pasteSchematic(loc, SereneWorldGen.getFileManager().getSmallHouseSchematics());
+                            pasteSchematic(loc, 1, SereneWorldGen.getFileManager().getSmallHouseSchematics());
                         }
                     }
                 }
